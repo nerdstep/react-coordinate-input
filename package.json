@@ -1,8 +1,8 @@
 {
   "name": "react-coordinate-input",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "A masked input for entering latitude &amp; longitude coordinates.",
-  "author": "nerdstep",
+  "author": "Justin M. Williams <justinwilliams42@gmail.com>",
   "license": "MIT",
   "repository": "nerdstep/react-coordinate-input",
   "main": "dist/index.js",
@@ -17,7 +17,9 @@
     "predeploy": "cd example && yarn install && yarn run build",
     "deploy": "gh-pages -d example/build"
   },
-  "dependencies": {},
+  "dependencies": {
+    "react-text-mask": "^5.4.1"
+  },
   "peerDependencies": {
     "prop-types": "^15.5.4",
     "react": "^15.0.0 || ^16.0.0",
@@ -53,5 +55,10 @@
   },
   "files": [
     "dist"
-  ]
+  ],
+  "prettier": {
+    "semi": false,
+    "singleQuote": true,
+    "trailingComma": "es5"
+  }
 }
