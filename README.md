@@ -2,9 +2,19 @@
 
 > A masked input React component for entering latitude &amp; longitude coordinates as Degree Minute Second (DMS) values, with built-in conversion to Decimal Degrees.
 
-[![NPM](https://img.shields.io/npm/v/react-coordinate-input.svg)](https://www.npmjs.com/package/react-coordinate-input) [![NPM](https://img.shields.io/npm/dt/react-coordinate-input.svg)](https://www.npmjs.com/package/react-coordinate-input) 
+[![NPM](https://img.shields.io/npm/v/react-coordinate-input.svg)](https://www.npmjs.com/package/react-coordinate-input) 
+[![NPM](https://img.shields.io/npm/dt/react-coordinate-input.svg)](https://www.npmjs.com/package/react-coordinate-input) 
+[![gzip size](http://img.badgesize.io/https://unpkg.com/react-coordinate-input/dist/index.js?compression=gzip)](https://unpkg.com/react-coordinate-input/dist/index.js)
+[![license](https://img.shields.io/npm/l/react-coordinate-input.svg)](./LICENSE)
 
-### [Demo](https://nerdstep.github.io/react-coordinate-input/)
+## Features
+
+- Lightweight at ~8kb
+- Masked input with [Text Mask](https://github.com/text-mask/text-mask)
+- Coordinate validation
+- Conversion to decimal degrees
+
+## [Demo](https://nerdstep.github.io/react-coordinate-input/)
 
 ## Install
 
@@ -13,6 +23,8 @@ npm install --save react-coordinate-input
 ```
 
 ## Usage
+
+**Note:** The `onChange` callback will only trigger once a valid coordinate has been entered.
 
 ```jsx
 import React, { Component } from 'react'
