@@ -1,10 +1,10 @@
 # react-coordinate-input
 
-> A masked input for entering latitude &amp; longitude coordinates.
+> A masked input React component for entering latitude &amp; longitude coordinates as Degree Minute Second (DMS) values, with built-in conversion to Decimal Degrees.
 
 [![NPM](https://img.shields.io/npm/v/react-coordinate-input.svg)](https://www.npmjs.com/package/react-coordinate-input) [![NPM](https://img.shields.io/npm/dt/react-coordinate-input.svg)](https://www.npmjs.com/package/react-coordinate-input) 
 
-## [Demo](https://nerdstep.github.io/react-coordinate-input/)
+### [Demo](https://nerdstep.github.io/react-coordinate-input/)
 
 ## Install
 
@@ -53,12 +53,15 @@ See the [Text Mask](https://github.com/text-mask/text-mask/blob/master/component
   },
   name: undefined,
   onBlur: undefined,
-  // The onChange callback receives two arguments, the original event and an array containing the coordinates converted to decimal degrees ([latitude, longitude])
+  // The onChange callback receives two arguments, 
+  // the original event and an array containing the coordinates 
+  // converted to decimal degrees ([latitude, longitude])
   onChange: () => {},
   placeholder: '04° 08′ 15″ N 162° 03′ 42″ E',
   // The placeholder character represents the fillable spot in the input mask
   placeholderChar: '_',
-  // Tells the Text Mask component to display the mask as a placeholder in place of the regular placeholder when the input element value is empty.
+  // Tells the Text Mask component to display the mask as a placeholder, 
+  // in place of the regular placeholder when the input element value is empty.
   showMask: false,
   value: undefined,
 }
