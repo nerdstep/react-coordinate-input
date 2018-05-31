@@ -61,10 +61,16 @@ export default class CoordinateInput extends Component {
 
   handleChange = e => {
     const { onChange } = this.props
-    const dms = this.normalizer(e.target.value)
+    const { value } = e.target
+    const dms = this.normalizer(value)
     const valid = validateDMS(dms)
 
-    if (valid) {
+    // Callback if there's an empty value
+    if (value.length === 0) {
+      onChange(e, { dd: [], dms: '' })
+
+      // Otherwise only callback if the value is a valid DMS
+    } else if (valid) {
       const dmsObj = parseDMS(dms)
       const lat = dmsToDecimal(dmsObj.lat)
       const lon = dmsToDecimal(dmsObj.lon)

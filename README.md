@@ -75,7 +75,7 @@ See the [Text Mask](https://github.com/text-mask/text-mask/blob/master/component
 
 ### onChange
 
-The `onChange` callback will only trigger once a valid coordinate has been entered.
+The `onChange` callback will only trigger once a valid coordinate has been entered or the input has been cleared.
 
 The callback receives two arguments, the original event and an object with two properties:
 
