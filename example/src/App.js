@@ -12,8 +12,8 @@ export default class App extends Component {
     }
   }
 
-  handleChange = (e, { decimalDegrees }) => {
-    this.setState({ dms: e.target.value, dd: decimalDegrees })
+  handleChange = (e, { dd, dms }) => {
+    this.setState({ dms, dd })
   }
 
   render() {

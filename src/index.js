@@ -61,16 +61,16 @@ export default class CoordinateInput extends Component {
 
   handleChange = e => {
     const { onChange } = this.props
-    const normalized = this.normalizer(e.target.value)
-    const valid = validateDMS(normalized)
+    const dms = this.normalizer(e.target.value)
+    const valid = validateDMS(dms)
 
     if (valid) {
-      const parsed = parseDMS(normalized)
-      const lat = dmsToDecimal(parsed.lat)
-      const lon = dmsToDecimal(parsed.lon)
+      const dmsObj = parseDMS(dms)
+      const lat = dmsToDecimal(dmsObj.lat)
+      const lon = dmsToDecimal(dmsObj.lon)
 
       // Callback with the original event and the converted values
-      onChange(e, { normalized, decimalDegrees: [lat, lon] })
+      onChange(e, { dd: [lat, lon], dms })
     }
   }
 
