@@ -1,6 +1,6 @@
 // Example valid matches:
 // 90.00.00N 180.00.00E | 34.59.33S 179.59.59W | 00.00.00N 000.00.00W
-const RE_LAT_LONG = /^([0-8][0-9](?:\.[0-5]\d){2}|90(?:\.00){2})([NS])\s?((?:0\d\d|1[0-7]\d)(?:\.[0-5]\d){2}|180(?:\.00){2})([EW])$/
+export const RE_LAT_LONG = /^([0-8][0-9](?:\.[0-5]\d){2}|90(?:\.00){2})([NS])\s?((?:0\d\d|1[0-7]\d)(?:\.[0-5]\d){2}|180(?:\.00){2})([EW])$/
 
 /**
  * Returns an input normalization function using the provided symbols
@@ -59,7 +59,7 @@ export function createInputMask({ degree, minute, second, spacer }) {
  * @param {string} value   - input value
  * @returns {boolean}
  */
-export function validateInput(value) {
+export function validateDMS(value) {
   return RE_LAT_LONG.test(value)
 }
 
@@ -69,7 +69,7 @@ export function validateInput(value) {
  * @param {string} value  - input value
  * @returns {object}
  */
-export function parseInput(value) {
+export function parseDMS(value) {
   const match = value.match(RE_LAT_LONG).slice(1)
   const lat = match[0].split('.').map(n => parseInt(n, 10))
   const latDir = match[1]

@@ -11,8 +11,8 @@ import {
   createInputMask,
   createInputNormalizer,
   dmsToDecimal,
-  parseInput,
-  validateInput,
+  parseDMS,
+  validateDMS,
 } from './utils'
 
 export default class CoordinateInput extends Component {
@@ -61,16 +61,16 @@ export default class CoordinateInput extends Component {
 
   handleChange = e => {
     const { onChange } = this.props
-    const value = this.normalizer(e.target.value)
-    const valid = validateInput(value)
+    const normalized = this.normalizer(e.target.value)
+    const valid = validateDMS(normalized)
 
     if (valid) {
-      const parsed = parseInput(value)
+      const parsed = parseDMS(normalized)
       const lat = dmsToDecimal(parsed.lat)
       const lon = dmsToDecimal(parsed.lon)
 
       // Callback with the original event and the converted values
-      onChange(e, [lat, lon])
+      onChange(e, { normalized, decimalDegrees: [lat, lon] })
     }
   }
 
