@@ -109,3 +109,23 @@ export function dmsToDecimal({ d, m, s }) {
   // Round the result to a precision of 8
   return Math.round(x * factor) / factor
 }
+
+/**
+ *
+ * @param {*} dd
+ */
+export function decimalToDMS(dd, isLon) {
+  const dir = dd < 0 ? (isLon ? 'W' : 'S') : isLon ? 'E' : 'N'
+  //d = integer(30.263888889°) = 30°
+  //m = integer((dd - d) × 60) = 15'
+  //s = (dd - d - m/60) × 3600 = 50"
+  let d = parseInt(dd, 0)
+  let m = Math.floor((dd - d) * 60)
+  let s = Math.round((dd - d - m / 60) * 3600)
+
+  d = Math.abs(d)
+  m = m < 10 ? `0${m}` : m
+  s = s < 10 ? `0${s}` : s
+
+  return `${d}.${m}.${s}${dir}`
+}
