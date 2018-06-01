@@ -1,5 +1,14 @@
-// Example valid matches:
-// 90.00.00N 180.00.00E | 34.59.33S 179.59.59W | 00.00.00N 000.00.00W
+/**
+ * Latitude/Longitude as Degees, Minutes, Seconds
+ *
+ * Range check for minutes and seconds (0-59)
+ * Max latitude 90.00.00, Max longitude 180.00.00
+ *
+ * Matches:
+ * 90.00.00N 180.00.00E | 34.59.33S 179.59.59W | 00.00.00N 000.00.00W
+ * Non-matches:
+ * 91.00.00N 181.00.00E | 34.59.33Z 179.59.59W | 00.00.00N 181.00.00W
+ */
 export const RE_LAT_LONG = /^([0-8][0-9](?:\.[0-5]\d){2}|90(?:\.00){2})([NS])\s?((?:0\d\d|1[0-7]\d)(?:\.[0-5]\d){2}|180(?:\.00){2})([EW])$/
 
 /**
