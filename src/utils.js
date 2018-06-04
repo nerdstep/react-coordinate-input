@@ -1,5 +1,6 @@
 /**
  * Latitude/Longitude as Degrees, Minutes, Seconds
+ * Regexr: https://regexr.com/3qgn3
  *
  * Range check for minutes and seconds (0-59)
  * Max latitude 90:00:00, Max longitude 180:00:00
@@ -12,7 +13,11 @@
  * 91:00:00N 181:00:00E | 34:59:33Z 179:59:59W | 00:00:00N 181:00:00W
  * 90:00:00.001N 180:00:00.001E
  *
- * Regexr: https://regexr.com/3qgn3
+ * Groups:
+ * [1] 90:00:00.000
+ * [2] N
+ * [3] 180:00:00.000
+ * [4] E
  */
 export const RE_LAT_LONG = /^([0-8][0-9](?::[0-5]\d)(?::[0-5]\d(?:\.\d{1,3})?)|90(?::00)(?::00)(?:\.0{1,3})?)([NS])\s?((?:0\d\d|1[0-7]\d)(?::[0-5]\d)(?::[0-5]\d(?:\.\d{1,3})?)|180(?::00)(?::00)(?:\.0{1,3})?)([EW])$/
 
