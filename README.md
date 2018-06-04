@@ -29,8 +29,8 @@ import React, { Component } from 'react'
 import CoordinateInput from 'react-coordinate-input'
 
 class Example extends Component {
-  handleChange = (e, { dd, dms }) => {
-    console.log(e.target.value, dd, dms)
+  handleChange = (e, { dd, dms, dmsArray }) => {
+    console.log(e.target.value, dd, dms, dmsArray)
   }
 
   render () {
@@ -50,6 +50,8 @@ See the [Text Mask](https://github.com/text-mask/text-mask/blob/master/component
 ```javascript
 {
   className: undefined,
+  // Number of decimal places to round decimal degrees to
+  ddPrecision: 6,
   // Tells the component whether to be in guide or no guide mode
   guide: true,
   // Use this to pass additional props to the underlying input
@@ -77,14 +79,19 @@ See the [Text Mask](https://github.com/text-mask/text-mask/blob/master/component
 
 The `onChange` callback will only trigger once a valid coordinate has been entered or the input has been cleared.
 
-The callback receives two arguments, the original event and an object with two properties:
+The callback receives two arguments, the original event and an object with three properties:
 
 ```javascript
 {
   // The DMS value converted to Decimal Degrees
   dd: [90, -180],
   // The normalized DMS value
-  dms: '90.00.00N180.00.00W'
+  dms: '90:00:00:N:180:00:00:W',
+  // DMS values split into an array of arrays,
+  // e.g. [[D, M, S, 'N|S'], [D, M, S, 'E|W']]
+  dmsArray: [
+    [90, 0, 0, 'N'], [180, 0, 0, 'W']
+  ]
 }
 ```
 

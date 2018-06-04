@@ -75,7 +75,7 @@ export function validateDMS(value) {
  *
  * @param {string} value  - DMS value, e.g. '04:08:15:N:162:03:42:E'
  * @param {string} sep    - separator
- * @returns {array}       - [[<D>, <M>, <S>, '<N|S>'], [<D>, <M>, <S>, '<E|W>']]
+ * @returns {array}       - [[D, M, S, 'N|S'], [D, M, S, 'E|W']]
  */
 export function parseDMS(value, sep = ':') {
   const match = value.match(RE_DMS).slice(1)
@@ -123,7 +123,7 @@ export function dmsToDecimal(
  * @param {number} dd         - decimal degree value
  * @param {boolean} isLon     - is longitude?
  * @param {number} precision  - decimal places for seconds
- * @returns {array}           - DMS values, e.g. [<D>, <M>, <S>, '<N|S|E|W>']
+ * @returns {array}           - DMS values, e.g. [D, M, S, 'N|S|E|W']
  */
 export function decimalToDMS(dd, isLon, precision = 3) {
   const factor = Math.pow(10, precision)
