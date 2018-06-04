@@ -7,13 +7,15 @@ export default class App extends Component {
     super()
 
     this.state = {
-      dms: '',
       dd: [],
+      dms: '',
+      dmsArray: [],
     }
   }
 
-  handleChange = (e, { dd, dms }) => {
-    this.setState({ dms, dd })
+  handleChange = (e, { dd, dms, dmsArray }) => {
+    console.log(e.target.value, dd, dms, dmsArray)
+    this.setState({ dd, dms, dmsArray })
   }
 
   render() {
