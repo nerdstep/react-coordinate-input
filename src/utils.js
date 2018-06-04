@@ -43,19 +43,44 @@ export function normalizeInput(value = '', sep = ':') {
  * @param {string} symbols.spacer
  * @return {array} - input mask
  */
-export function createInputMask({ degree, minute, second, spacer }) {
+export function createInputMask(
+  { degree, minute, second, spacer },
+  dmsPrecision = 0
+) {
+  const digit = /\d/
+
+  const getSeconds = dmsPrecision => {
+    const res = [digit, digit]
+
+    if (dmsPrecision > 0) {
+      res.push('.')
+
+      for (let i = 0; i < dmsPrecision; i++) {
+        res.push(digit)
+      }
+    }
+
+    res.push(second)
+    res.push(spacer)
+
+    return res
+  }
+
   const lat = [].concat(
-    [/\d/, /\d/, degree, spacer],
-    [/\d/, /\d/, minute, spacer],
-    [/\d/, /\d/, second, spacer],
+    [digit, digit, degree, spacer],
+    [digit, digit, minute, spacer],
+    getSeconds(dmsPrecision),
     [/[nNsS]/, spacer]
   )
+
   const lon = [].concat(
-    [/\d/, /\d/, /\d/, degree, spacer],
-    [/\d/, /\d/, minute, spacer],
-    [/\d/, /\d/, second, spacer],
+    [digit, digit, digit, degree, spacer],
+    [digit, digit, minute, spacer],
+    getSeconds(dmsPrecision),
     [/[eEwW]/]
   )
+
+  console.log(dmsPrecision, lat)
 
   return [].concat(lat, lon)
 }

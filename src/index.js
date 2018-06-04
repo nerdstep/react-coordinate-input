@@ -19,6 +19,7 @@ export default class CoordinateInput extends Component {
   static propTypes = {
     className: PropTypes.string,
     ddPrecision: PropTypes.number,
+    dmsPrecision: PropTypes.number,
     guide: PropTypes.bool,
     inputProps: PropTypes.object,
     maskSymbols: PropTypes.shape({
@@ -38,6 +39,7 @@ export default class CoordinateInput extends Component {
 
   static defaultProps = {
     ddPrecision: 6,
+    dmsPrecision: 3,
     guide: true,
     maskSymbols: {
       degree: '°',
@@ -54,10 +56,10 @@ export default class CoordinateInput extends Component {
   constructor(props) {
     super()
 
-    const { maskSymbols } = props
+    const { dmsPrecision, maskSymbols } = props
 
     this.pipe = createLatLongPipe()
-    this.mask = createInputMask(maskSymbols)
+    this.mask = createInputMask(maskSymbols, dmsPrecision)
   }
 
   handleChange = e => {
