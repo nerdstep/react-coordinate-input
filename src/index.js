@@ -9,8 +9,8 @@ import MaskedInput from 'react-text-mask'
 import createLatLongPipe from './createLatLongPipe'
 import {
   createInputMask,
-  createInputNormalizer,
   dmsToDecimal,
+  normalizeInput,
   parseDMS,
   validateDMS,
 } from './utils'
@@ -56,13 +56,12 @@ export default class CoordinateInput extends Component {
 
     this.pipe = createLatLongPipe()
     this.mask = createInputMask(maskSymbols)
-    this.normalizer = createInputNormalizer(maskSymbols)
   }
 
   handleChange = e => {
     const { onChange } = this.props
     const { value } = e.target
-    const dms = this.normalizer(value)
+    const dms = normalizeInput(value)
     const valid = validateDMS(dms)
 
     // Callback if there's an empty value

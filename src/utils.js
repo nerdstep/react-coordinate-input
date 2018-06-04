@@ -8,6 +8,7 @@
  * Matches:
  * 90:00:00N 180:00:00E | 34:59:33S 179:59:59W | 00:00:00N 000:00:00W
  * 34:59:33.123S 179:59:59.999W | 90:00:00.000N 180:00:00.000E
+ * 45:06:42:N:034:56:46:E (normalized format)
  *
  * Non-matches:
  * 91:00:00N 181:00:00E | 34:59:33Z 179:59:59W | 00:00:00N 181:00:00W
@@ -19,7 +20,7 @@
  * [3] 180:00:00.000
  * [4] E
  */
-export const RE_LAT_LONG = /^([0-8][0-9](?::[0-5]\d)(?::[0-5]\d(?:\.\d{1,3})?)|90(?::00)(?::00)(?:\.0{1,3})?)([NS])\s?((?:0\d\d|1[0-7]\d)(?::[0-5]\d)(?::[0-5]\d(?:\.\d{1,3})?)|180(?::00)(?::00)(?:\.0{1,3})?)([EW])$/
+export const RE_DMS = /^([0-8][0-9](?::[0-5]\d)(?::[0-5]\d(?:\.\d{1,3})?)|90(?::00)(?::00)(?:\.0{1,3})?)(?:\s|:)?([NS])(?:\s|:)?((?:0\d\d|1[0-7]\d)(?::[0-5]\d)(?::[0-5]\d(?:\.\d{1,3})?)|180(?::00)(?::00)(?:\.0{1,3})?)(?:\s|:)?([EW])$/
 
 /**
  * Returns an input normalization function using the provided symbols
@@ -31,18 +32,8 @@ export const RE_LAT_LONG = /^([0-8][0-9](?::[0-5]\d)(?::[0-5]\d(?:\.\d{1,3})?)|9
  * @param {string} symbols.spacer
  * @returns {function}
  */
-export function createInputNormalizer({ degree, minute, second, spacer }) {
-  const reSpacer = new RegExp(spacer, 'g')
-  const reDeg = new RegExp(degree, 'g')
-  const reMin = new RegExp(minute, 'g')
-  const reSec = new RegExp(second, 'g')
-
-  return (value = '') =>
-    value
-      .replace(reSpacer, '')
-      .replace(reDeg, ':')
-      .replace(reMin, ':')
-      .replace(reSec, '')
+export function normalizeInput(value = '', sep = ':') {
+  return value.replace(/[^0-9\.NSEW]/gi, sep).replace(/:{2,}/g, sep)
 }
 
 /**
@@ -79,18 +70,18 @@ export function createInputMask({ degree, minute, second, spacer }) {
  * @returns {boolean}
  */
 export function validateDMS(value) {
-  return RE_LAT_LONG.test(value)
+  return RE_DMS.test(value)
 }
 
 /**
  * Parse a DMS string into an object with latitude & longitude values
  *
- * @param {string} value  - input value
+ * @param {string} value  - DMS value, e.g. '45:06:42:N:034:56:46:E'
  * @param {string} sep    - separator
  * @returns {array}       - [[<D>, <M>, <S>], [<D>, <M>, <S>]]
  */
 export function parseDMS(value, sep = ':') {
-  const match = value.match(RE_LAT_LONG).slice(1)
+  const match = value.match(RE_DMS).slice(1)
   const lat = match[0].split(sep).map(n => parseInt(n, 10))
   const latDir = match[1]
   const lon = match[2].split(sep).map(n => parseInt(n, 10))
