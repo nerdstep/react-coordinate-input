@@ -120,9 +120,10 @@ export function dmsToDecimal(
 /**
  * Converts Decimal Degress to Degrees Minutes Seconds
  *
- * @param {number} dd     - decimal degree value
- * @param {boolean} isLon - is longitude?
- * @returns {array}       - DMS values, e.g. [<D>, <M>, <S>, '<N|S|E|W>']
+ * @param {number} dd         - decimal degree value
+ * @param {boolean} isLon     - is longitude?
+ * @param {number} precision  - decimal places for seconds
+ * @returns {array}           - DMS values, e.g. [<D>, <M>, <S>, '<N|S|E|W>']
  */
 export function decimalToDMS(dd, isLon, precision = 3) {
   const factor = Math.pow(10, precision)
