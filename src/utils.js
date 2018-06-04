@@ -20,7 +20,7 @@
  * [3] 180:00:00.000
  * [4] E
  */
-export const RE_DMS = /^([0-8][0-9](?::[0-5]\d)(?::[0-5]\d(?:\.\d{1,3})?)|90(?::00)(?::00)(?:\.0{1,3})?)(?:\s|:)?([NS])(?:\s|:)?((?:0\d\d|1[0-7]\d)(?::[0-5]\d)(?::[0-5]\d(?:\.\d{1,3})?)|180(?::00)(?::00)(?:\.0{1,3})?)(?:\s|:)?([EW])$/
+export const RE_DMS = /^((?:\d|[0-8][0-9])(?::(?:[0-5]\d|\d))(?::(?:[0-5]\d|\d)(?:\.\d{1,3})?)|90(?::00)(?::00)(?:\.0{1,3})?)(?:\s|:)?([NS])(?:\s|:)?((?:0?\d\d|0?0?\d|1[0-7]\d)(?::(?:[0-5]\d|\d))(?::(?:[0-5]\d|\d)(?:\.\d{1,3})?)|180(?::00)(?::00)(?:\.0{1,3})?)(?:\s|:)?([EW])$/
 
 /**
  * Returns a normalized DMS input value
@@ -73,15 +73,15 @@ export function validateDMS(value) {
 /**
  * Parse a DMS string into an object with latitude & longitude values
  *
- * @param {string} value  - DMS value, e.g. '45:06:42:N:034:56:46:E'
+ * @param {string} value  - DMS value, e.g. '04:08:15:N:162:03:42:E'
  * @param {string} sep    - separator
  * @returns {array}       - [[<D>, <M>, <S>], [<D>, <M>, <S>]]
  */
 export function parseDMS(value, sep = ':') {
   const match = value.match(RE_DMS).slice(1)
-  const lat = match[0].split(sep).map(n => parseInt(n, 10))
+  const lat = match[0].split(sep).map(n => parseFloat(n))
   const latDir = match[1]
-  const lon = match[2].split(sep).map(n => parseInt(n, 10))
+  const lon = match[2].split(sep).map(n => parseFloat(n))
   const lonDir = match[3]
 
   if (latDir === 'S') lat[0] = -lat[0]
