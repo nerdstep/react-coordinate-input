@@ -76,7 +76,7 @@ export function validateDMS(value) {
  * Parse a DMS string into an object with latitude & longitude values
  *
  * @param {string} value  - input value
- * @returns {object}
+ * @returns {array}       - [[<D>, <M>, <S>], [<D>, <M>, <S>]]
  */
 export function parseDMS(value) {
   const match = value.match(RE_LAT_LONG).slice(1)
@@ -88,26 +88,26 @@ export function parseDMS(value) {
   if (latDir === 'S') lat[0] = -lat[0]
   if (lonDir === 'W') lon[0] = -lon[0]
 
-  return {
-    lat: { d: lat[0], m: lat[1], s: lat[2] },
-    lon: { d: lon[0], m: lon[1], s: lon[2] },
-  }
+  return [[lat[0], lat[1], lat[2]], [lon[0], lon[1], lon[2]]]
 }
 
 /**
  * Converts Degrees Minutes Seconds to Decimal Degrees
  *
- * @param {object} dms    - DMS object
- * @param {number} dms.d  - degrees
- * @param {number} dms.m  - minutes
- * @param {number} dms.s  - seconds
- * @returns {number}      - decimal degrees
+ * Formula:
+ * DD = D + M / 60 + S / 3600
+ *
+ * @param {number} degrees    - degrees
+ * @param {number} minutes    - minutes
+ * @param {number} seconds    - seconds
+ * @param {number} precision  - decimal places
+ * @returns {number}          - decimal degrees
  */
-export function dmsToDecimal({ d, m, s }) {
-  const factor = Math.pow(10, 8)
-  const x = d + m / 60 + s / 3600
-  // Round the result to a precision of 8
-  return Math.round(x * factor) / factor
+export function dmsToDecimal(degrees, minutes, seconds, precision = 6) {
+  const factor = Math.pow(10, precision)
+  const dd = degrees + minutes / 60 + seconds / 3600
+  // Round the result to the given precision
+  return Math.round(dd * factor) / factor
 }
 
 /**

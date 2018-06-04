@@ -71,9 +71,9 @@ export default class CoordinateInput extends Component {
 
       // Otherwise only callback if the value is a valid DMS
     } else if (valid) {
-      const dmsObj = parseDMS(dms)
-      const lat = dmsToDecimal(dmsObj.lat)
-      const lon = dmsToDecimal(dmsObj.lon)
+      const dmsArr = parseDMS(dms)
+      const lat = dmsToDecimal(...dmsArr[0])
+      const lon = dmsToDecimal(...dmsArr[1])
 
       // Callback with the original event and the converted values
       onChange(e, { dd: [lat, lon], dms })
