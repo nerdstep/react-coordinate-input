@@ -23,14 +23,11 @@
 export const RE_DMS = /^([0-8][0-9](?::[0-5]\d)(?::[0-5]\d(?:\.\d{1,3})?)|90(?::00)(?::00)(?:\.0{1,3})?)(?:\s|:)?([NS])(?:\s|:)?((?:0\d\d|1[0-7]\d)(?::[0-5]\d)(?::[0-5]\d(?:\.\d{1,3})?)|180(?::00)(?::00)(?:\.0{1,3})?)(?:\s|:)?([EW])$/
 
 /**
- * Returns an input normalization function using the provided symbols
+ * Returns a normalized DMS input value
  *
- * @param {object} symbols
- * @param {string} symbols.degree
- * @param {string} symbols.minute
- * @param {string} symbols.second
- * @param {string} symbols.spacer
- * @returns {function}
+ * @param {string} value  - input value
+ * @param {string} sep    - value separator
+ * @returns {string}      - normalized value
  */
 export function normalizeInput(value = '', sep = ':') {
   return value.replace(/[^0-9\.NSEW]/gi, sep).replace(/:{2,}/g, sep)
