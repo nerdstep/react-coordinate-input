@@ -10,6 +10,7 @@ export default class App extends Component {
       dd: [],
       dms: '',
       dmsArray: [],
+      ddPrecision: 6,
     }
   }
 
@@ -19,7 +20,7 @@ export default class App extends Component {
   }
 
   render() {
-    const { dms, dd } = this.state
+    const { ddPrecision, dd, dms } = this.state
     return (
       <section className="hero is-fullheight has-background-light">
         <div className="hero-body">
@@ -36,6 +37,7 @@ export default class App extends Component {
                   <div className="control">
                     <CoordinateInput
                       className="input"
+                      ddPrecision={ddPrecision}
                       onChange={this.handleChange}
                       value={dms}
                     />
