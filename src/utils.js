@@ -61,7 +61,7 @@ export function createInputMask({ degree, minute, second, spacer }) {
 }
 
 /**
- * Returns true if the provided input is a valid DMS string
+ * Returns true if the provided input is a valid (normalized) DMS string
  *
  * @param {string} value   - input value
  * @returns {boolean}
@@ -75,7 +75,7 @@ export function validateDMS(value) {
  *
  * @param {string} value  - DMS value, e.g. '04:08:15:N:162:03:42:E'
  * @param {string} sep    - separator
- * @returns {array}       - [[<D>, <M>, <S>, 'N|S'], [<D>, <M>, <S>, 'E|W']]
+ * @returns {array}       - [[<D>, <M>, <S>, '<N|S>'], [<D>, <M>, <S>, '<E|W>']]
  */
 export function parseDMS(value, sep = ':') {
   const match = value.match(RE_DMS).slice(1)
@@ -118,21 +118,26 @@ export function dmsToDecimal(
 }
 
 /**
+ * Converts Decimal Degress to Degrees Minutes Seconds
  *
- * @param {*} dd
+ * @param {number} dd     - decimal degree value
+ * @param {boolean} isLon - is longitude?
+ * @returns {array}       - DMS values, e.g. [<D>, <M>, <S>, '<N|S|E|W>']
  */
-export function decimalToDMS(dd, isLon) {
+export function decimalToDMS(dd, isLon, precision = 3) {
+  const factor = Math.pow(10, precision)
   const dir = dd < 0 ? (isLon ? 'W' : 'S') : isLon ? 'E' : 'N'
-  //d = integer(30.263888889°) = 30°
-  //m = integer((dd - d) × 60) = 15'
-  //s = (dd - d - m/60) × 3600 = 50"
-  let d = parseInt(dd, 0)
-  let m = Math.floor((dd - d) * 60)
-  let s = Math.round((dd - d - m / 60) * 3600)
 
+  let d = parseInt(dd, 10) // truncate dd to get degrees
+  const frac = Math.abs(dd - d) // get fractional part
+  const m = parseInt(frac * 60, 10) // multiply fraction by 60 and truncate
+  let s = frac * 3600 - m * 60
+
+  // Round the result to the given precision
+  s = Math.round(s * factor) / factor
+  // Ensure degrees is a positive value,
+  // since we're returning direction as a string value
   d = Math.abs(d)
-  m = m < 10 ? `0${m}` : m
-  s = s < 10 ? `0${s}` : s
 
-  return `${d}.${m}.${s}${dir}`
+  return [d, m, s, dir]
 }
