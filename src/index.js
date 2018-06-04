@@ -68,7 +68,7 @@ export default class CoordinateInput extends Component {
 
     // Callback if there's an empty value
     if (value.length === 0) {
-      onChange(e, { dd: [], dms: '' })
+      onChange(e, { dd: [], dms: '', dmsArray: [] })
 
       // Otherwise only callback if the value is a valid DMS
     } else if (valid) {
