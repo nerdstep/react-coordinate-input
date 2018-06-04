@@ -1,15 +1,20 @@
 /**
- * Latitude/Longitude as Degees, Minutes, Seconds
+ * Latitude/Longitude as Degrees, Minutes, Seconds
  *
  * Range check for minutes and seconds (0-59)
- * Max latitude 90.00.00, Max longitude 180.00.00
+ * Max latitude 90:00:00, Max longitude 180:00:00
  *
  * Matches:
- * 90.00.00N 180.00.00E | 34.59.33S 179.59.59W | 00.00.00N 000.00.00W
+ * 90:00:00N 180:00:00E | 34:59:33S 179:59:59W | 00:00:00N 000:00:00W
+ * 34:59:33.123S 179:59:59.999W | 90:00:00.000N 180:00:00.000E
+ *
  * Non-matches:
- * 91.00.00N 181.00.00E | 34.59.33Z 179.59.59W | 00.00.00N 181.00.00W
+ * 91:00:00N 181:00:00E | 34:59:33Z 179:59:59W | 00:00:00N 181:00:00W
+ * 90:00:00.001N 180:00:00.001E
+ *
+ * Regexr: https://regexr.com/3qgn3
  */
-export const RE_LAT_LONG = /^([0-8][0-9](?:\.[0-5]\d){2}|90(?:\.00){2})([NS])\s?((?:0\d\d|1[0-7]\d)(?:\.[0-5]\d){2}|180(?:\.00){2})([EW])$/
+export const RE_LAT_LONG = /^([0-8][0-9](?::[0-5]\d)(?::[0-5]\d(?:\.\d{1,3})?)|90(?::00)(?::00)(?:\.0{1,3})?)([NS])\s?((?:0\d\d|1[0-7]\d)(?::[0-5]\d)(?::[0-5]\d(?:\.\d{1,3})?)|180(?::00)(?::00)(?:\.0{1,3})?)([EW])$/
 
 /**
  * Returns an input normalization function using the provided symbols
@@ -30,8 +35,8 @@ export function createInputNormalizer({ degree, minute, second, spacer }) {
   return (value = '') =>
     value
       .replace(reSpacer, '')
-      .replace(reDeg, '.')
-      .replace(reMin, '.')
+      .replace(reDeg, ':')
+      .replace(reMin, ':')
       .replace(reSec, '')
 }
 
@@ -76,13 +81,14 @@ export function validateDMS(value) {
  * Parse a DMS string into an object with latitude & longitude values
  *
  * @param {string} value  - input value
+ * @param {string} sep    - separator
  * @returns {array}       - [[<D>, <M>, <S>], [<D>, <M>, <S>]]
  */
-export function parseDMS(value) {
+export function parseDMS(value, sep = ':') {
   const match = value.match(RE_LAT_LONG).slice(1)
-  const lat = match[0].split('.').map(n => parseInt(n, 10))
+  const lat = match[0].split(sep).map(n => parseInt(n, 10))
   const latDir = match[1]
-  const lon = match[2].split('.').map(n => parseInt(n, 10))
+  const lon = match[2].split(sep).map(n => parseInt(n, 10))
   const lonDir = match[3]
 
   if (latDir === 'S') lat[0] = -lat[0]
