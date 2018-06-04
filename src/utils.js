@@ -75,19 +75,18 @@ export function validateDMS(value) {
  *
  * @param {string} value  - DMS value, e.g. '04:08:15:N:162:03:42:E'
  * @param {string} sep    - separator
- * @returns {array}       - [[<D>, <M>, <S>], [<D>, <M>, <S>]]
+ * @returns {array}       - [[<D>, <M>, <S>, 'N|S'], [<D>, <M>, <S>, 'E|W']]
  */
 export function parseDMS(value, sep = ':') {
   const match = value.match(RE_DMS).slice(1)
+
   const lat = match[0].split(sep).map(n => parseFloat(n))
-  const latDir = match[1]
   const lon = match[2].split(sep).map(n => parseFloat(n))
-  const lonDir = match[3]
 
-  if (latDir === 'S') lat[0] = -lat[0]
-  if (lonDir === 'W') lon[0] = -lon[0]
-
-  return [[lat[0], lat[1], lat[2]], [lon[0], lon[1], lon[2]]]
+  return [
+    [lat[0], lat[1], lat[2], match[1]],
+    [lon[0], lon[1], lon[2], match[3]],
+  ]
 }
 
 /**
@@ -99,14 +98,23 @@ export function parseDMS(value, sep = ':') {
  * @param {number} degrees    - degrees
  * @param {number} minutes    - minutes
  * @param {number} seconds    - seconds
+ * @param {string} direction  - compass direction
  * @param {number} precision  - decimal places
  * @returns {number}          - decimal degrees
  */
-export function dmsToDecimal(degrees, minutes, seconds, precision = 6) {
+export function dmsToDecimal(
+  degrees,
+  minutes,
+  seconds,
+  direction,
+  precision = 6
+) {
   const factor = Math.pow(10, precision)
-  const dd = degrees + minutes / 60 + seconds / 3600
+  let dd = degrees + minutes / 60 + seconds / 3600
   // Round the result to the given precision
-  return Math.round(dd * factor) / factor
+  dd = Math.round(dd * factor) / factor
+  // If direction is South or West then value is negative
+  return /S|W/.test(direction) ? dd * -1 : dd
 }
 
 /**
