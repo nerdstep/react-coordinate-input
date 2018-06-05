@@ -23,6 +23,21 @@
 export const RE_DMS = /^((?:\d|[0-8][0-9])(?::(?:[0-5]\d|\d))(?::(?:[0-5]\d|\d)(?:\.\d{1,3})?)|90(?::00)(?::00)(?:\.0{1,3})?)(?:\s|:)?([NS])(?:\s|:)?((?:0?\d\d|0?0?\d|1[0-7]\d)(?::(?:[0-5]\d|\d))(?::(?:[0-5]\d|\d)(?:\.\d{1,3})?)|180(?::00)(?::00)(?:\.0{1,3})?)(?:\s|:)?([EW])$/
 
 /**
+ * Fills an array with the provided value X number of times
+ *
+ * @param {array} arr     - array to fill
+ * @param {*} value       - value to push to the array
+ * @param {number} count  - number of items to add
+ * @returns {array}       - array filled with values
+ */
+export function fill(arr, value, count) {
+  for (let i = 0; i < count; i++) {
+    arr.push(value)
+  }
+  return arr
+}
+
+/**
  * Returns a normalized DMS input value
  *
  * @param {string} value  - input value
@@ -31,58 +46,6 @@ export const RE_DMS = /^((?:\d|[0-8][0-9])(?::(?:[0-5]\d|\d))(?::(?:[0-5]\d|\d)(
  */
 export function normalizeInput(value = '', sep = ':') {
   return value.replace(/[^0-9\.NSEW]/gi, sep).replace(/:{2,}/g, sep)
-}
-
-/**
- * Returns an input mask using the provided symbols
- *
- * @param {object} symbols
- * @param {string} symbols.degree
- * @param {string} symbols.minute
- * @param {string} symbols.second
- * @param {string} symbols.spacer
- * @return {array} - input mask
- */
-export function createInputMask(
-  { degree, minute, second, spacer },
-  dmsPrecision = 0
-) {
-  const digit = /\d/
-
-  const getSeconds = dmsPrecision => {
-    const res = [digit, digit]
-
-    if (dmsPrecision > 0) {
-      res.push('.')
-
-      for (let i = 0; i < dmsPrecision; i++) {
-        res.push(digit)
-      }
-    }
-
-    res.push(second)
-    res.push(spacer)
-
-    return res
-  }
-
-  const lat = [].concat(
-    [digit, digit, degree, spacer],
-    [digit, digit, minute, spacer],
-    getSeconds(dmsPrecision),
-    [/[nNsS]/, spacer]
-  )
-
-  const lon = [].concat(
-    [digit, digit, digit, degree, spacer],
-    [digit, digit, minute, spacer],
-    getSeconds(dmsPrecision),
-    [/[eEwW]/]
-  )
-
-  console.log(dmsPrecision, lat)
-
-  return [].concat(lat, lon)
 }
 
 /**

@@ -7,13 +7,8 @@ import PropTypes from 'prop-types'
 import MaskedInput from 'react-text-mask'
 
 import createLatLongPipe from './createLatLongPipe'
-import {
-  createInputMask,
-  dmsToDecimal,
-  normalizeInput,
-  parseDMS,
-  validateDMS,
-} from './utils'
+import createMask from './createMask'
+import { dmsToDecimal, normalizeInput, parseDMS, validateDMS } from './utils'
 
 export default class CoordinateInput extends Component {
   static propTypes = {
@@ -58,8 +53,8 @@ export default class CoordinateInput extends Component {
 
     const { dmsPrecision, maskSymbols } = props
 
-    this.pipe = createLatLongPipe()
-    this.mask = createInputMask(maskSymbols, dmsPrecision)
+    this.pipe = createLatLongPipe(dmsPrecision)
+    this.mask = createMask(maskSymbols, dmsPrecision)
   }
 
   handleChange = e => {
