@@ -7,17 +7,14 @@ import PropTypes from 'prop-types'
 import MaskedInput from 'react-text-mask'
 
 import createLatLongPipe from './createLatLongPipe'
-import {
-  createInputMask,
-  createInputNormalizer,
-  dmsToDecimal,
-  parseDMS,
-  validateDMS,
-} from './utils'
+import createMask from './createMask'
+import { dmsToDecimal, normalizeInput, parseDMS, validateDMS } from './utils'
 
 export default class CoordinateInput extends Component {
   static propTypes = {
     className: PropTypes.string,
+    ddPrecision: PropTypes.number,
+    dmsPrecision: PropTypes.number,
     guide: PropTypes.bool,
     inputProps: PropTypes.object,
     maskSymbols: PropTypes.shape({
@@ -36,6 +33,8 @@ export default class CoordinateInput extends Component {
   }
 
   static defaultProps = {
+    ddPrecision: 6,
+    dmsPrecision: 0,
     guide: true,
     maskSymbols: {
       degree: '°',
@@ -52,31 +51,30 @@ export default class CoordinateInput extends Component {
   constructor(props) {
     super()
 
-    const { maskSymbols } = props
+    const { dmsPrecision, maskSymbols } = props
 
-    this.pipe = createLatLongPipe()
-    this.mask = createInputMask(maskSymbols)
-    this.normalizer = createInputNormalizer(maskSymbols)
+    this.pipe = createLatLongPipe(dmsPrecision)
+    this.mask = createMask(maskSymbols, dmsPrecision)
   }
 
   handleChange = e => {
-    const { onChange } = this.props
+    const { ddPrecision, onChange } = this.props
     const { value } = e.target
-    const dms = this.normalizer(value)
+    const dms = normalizeInput(value)
     const valid = validateDMS(dms)
 
     // Callback if there's an empty value
     if (value.length === 0) {
-      onChange(e, { dd: [], dms: '' })
+      onChange(e, { dd: [], dms: '', dmsArray: [] })
 
       // Otherwise only callback if the value is a valid DMS
     } else if (valid) {
-      const dmsObj = parseDMS(dms)
-      const lat = dmsToDecimal(dmsObj.lat)
-      const lon = dmsToDecimal(dmsObj.lon)
+      const dmsArray = parseDMS(dms)
+      const lat = dmsToDecimal(...dmsArray[0], ddPrecision)
+      const lon = dmsToDecimal(...dmsArray[1], ddPrecision)
 
       // Callback with the original event and the converted values
-      onChange(e, { dd: [lat, lon], dms })
+      onChange(e, { dd: [lat, lon], dms, dmsArray })
     }
   }
 

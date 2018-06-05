@@ -1,4 +1,4 @@
-import CoordinateInput from './'
+import CoordinateInput from '../'
 
 describe('CoordinateInput', () => {
   it('is truthy', () => {
