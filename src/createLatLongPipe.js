@@ -68,8 +68,6 @@ function isInvalid(conformedValue, { decKey, format, max, min }, offset = 0) {
     invalid = true
   }
 
-  console.log(values, invalid)
-
   return invalid
 }
 
