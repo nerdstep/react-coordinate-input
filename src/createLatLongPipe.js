@@ -62,12 +62,13 @@ function isInvalid(conformedValue, { decKey, format, max, min }, offset = 0) {
 
   // If lat degree is 90 or long is 180 then minutes & seconds must be 0
   if (
-    (((values.dd && values.dd === 90) || (values.ddd && values.ddd === 180)) &&
-      (values.mm > 0 || values.ss > 0)) ||
-    (decKey && values[decKey] > 0)
+    ((values.dd && values.dd === 90) || (values.ddd && values.ddd === 180)) &&
+    (values.mm > 0 || values.ss > 0 || (decKey && values[decKey] > 0))
   ) {
     invalid = true
   }
+
+  console.log(values, invalid)
 
   return invalid
 }
