@@ -50,8 +50,10 @@ See the [Text Mask](https://github.com/text-mask/text-mask/blob/master/component
 ```javascript
 {
   className: undefined,
-  // Number of decimal places to round decimal degrees to
+  // Number of decimal places to round decimal degrees to (0-8)
   ddPrecision: 6,
+  // Number of decimal places for Seconds value on input (0-6)
+  dmsPrecision: 0,
   // Tells the component whether to be in guide or no guide mode
   guide: true,
   // Use this to pass additional props to the underlying input
