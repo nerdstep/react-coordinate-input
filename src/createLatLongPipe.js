@@ -120,8 +120,6 @@ export default function createLatLongPipe(precision = 0) {
     const isLatInvalid = isInvalid(conformedValue, lat)
     const isLonInvalid = isInvalid(conformedValue, lon, offset)
 
-    console.log(conformedValue, isLatInvalid, isLonInvalid)
-
     if (isLatInvalid || isLonInvalid) {
       return false
     }
