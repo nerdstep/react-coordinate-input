@@ -34,7 +34,7 @@ export default class CoordinateInput extends Component {
 
   static defaultProps = {
     ddPrecision: 6,
-    dmsPrecision: 3,
+    dmsPrecision: 0,
     guide: true,
     maskSymbols: {
       degree: '°',
