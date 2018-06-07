@@ -90,7 +90,7 @@ export function parseDMS(value, sep = ':') {
  * @param {string} sep  - separator
  * @returns {string}    - '04:08:15:N:162:03:42:E'
  */
-export function serializeDMS(lat = [], lon = [], sep = ':') {
+export function serializeDMS(lat, lon, sep = ':') {
   const res = []
 
   res[0] = lat
