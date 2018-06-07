@@ -1,4 +1,4 @@
-import { RE_DMS } from './regex'
+import { RE_DD, RE_DMS } from './regex'
 
 /**
  * Fills an array with the provided value X number of times
@@ -27,17 +27,27 @@ export function normalizeInput(value = '', sep = ':') {
 }
 
 /**
- * Returns true if the provided input is a valid (normalized) DMS string
+ * Returns true if the provided value is a valid DD string
  *
- * @param {string} value   - input value
- * @returns {boolean}
+ * @param {string} value  - input value
+ * @returns {boolean}     - is valid DD?
+ */
+export function validateDD(value) {
+  return RE_DD.test(value)
+}
+
+/**
+ * Returns true if the provided value is a valid (normalized) DMS string
+ *
+ * @param {string} value  - input value
+ * @returns {boolean}     - is valid DMS?
  */
 export function validateDMS(value) {
   return RE_DMS.test(value)
 }
 
 /**
- * Parse a DMS string into an object with latitude & longitude values
+ * Parses a DMS string into an array of lat/lon arrays
  *
  * @param {string} value  - DMS value, e.g. '04:08:15:N:162:03:42:E'
  * @param {string} sep    - separator
@@ -53,6 +63,31 @@ export function parseDMS(value, sep = ':') {
     [lat[0], lat[1], lat[2], match[1]],
     [lon[0], lon[1], lon[2], match[3]],
   ]
+}
+
+/**
+ * Serializes DMS lat/lon arrays into a normalized DMS string
+ *
+ * @param {array} lat   - DMS latitude, e.g. [4, 8, 15, 'N']
+ * @param {array} lon   - DMS longitude, e.g. [162, 3, 42, 'E']
+ * @param {string} sep  - separator
+ * @returns {string}    - '04:08:15:N:162:03:42:E'
+ */
+export function serializeDMS(lat = [], lon = [], sep = ':') {
+  const res = []
+
+  res[0] = lat.map(item => item.toString().replace(/^(\d)$/, '0$1')).join(sep)
+
+  res[1] = lon
+    .map((item, i) => {
+      if (i === 0) {
+        return item.toString().replace(/^(\d\d)$/, '0$1')
+      }
+      return item.toString().replace(/^(\d)$/, '0$1')
+    })
+    .join(sep)
+
+  return res.join(sep)
 }
 
 /**
