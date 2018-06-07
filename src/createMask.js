@@ -23,29 +23,32 @@ const createPart = (symbol, spacer, digits, precision) => {
 /**
  * Returns an input mask using the provided symbols
  *
- * @param {object} symbols        - character symbols to use in the mask
- * @param {string} symbols.degree - degrees symbol, e.g. °
- * @param {string} symbols.minute - minutes symbol e.g. ′
- * @param {string} symbols.second - seconds symbol e.g. ″
- * @param {string} symbols.spacer - space character
- * @param {number} dmsPrecision   - decimal places for seconds
+ * @param {object} opts           - mask options
+ * @param {string} opts.degree    - degrees symbol, e.g. °
+ * @param {string} opts.minute    - minutes symbol e.g. ′
+ * @param {string} opts.second    - seconds symbol e.g. ″
+ * @param {string} opts.spacer    - space character
+ * @param {number} opts.precision - decimal places
  * @return {array}                - input mask
  */
-export default function createMask(
-  { degree, minute, second, spacer },
-  dmsPrecision = 0
-) {
+export default function createMask({
+  degree = '°',
+  minute = '′',
+  second = '″',
+  spacer = ' ',
+  precision = 0,
+} = {}) {
   const lat = [].concat(
     createPart(degree, spacer, 2, 0),
     createPart(minute, spacer, 2, 0),
-    createPart(second, spacer, 2, dmsPrecision),
+    createPart(second, spacer, 2, precision),
     [NS, spacer]
   )
 
   const lon = [].concat(
     createPart(degree, spacer, 3, 0),
     createPart(minute, spacer, 2, 0),
-    createPart(second, spacer, 2, dmsPrecision),
+    createPart(second, spacer, 2, precision),
     [EW]
   )
 
