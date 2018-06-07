@@ -1,26 +1,4 @@
-/**
- * Latitude/Longitude as Degrees, Minutes, Seconds
- * Regexr: https://regexr.com/3qgn3
- *
- * Range check for minutes and seconds (0-59)
- * Max latitude 90:00:00, Max longitude 180:00:00
- *
- * Matches:
- * 90:00:00N 180:00:00E | 34:59:33S 179:59:59W | 00:00:00N 000:00:00W
- * 34:59:33.123S 179:59:59.999W | 90:00:00.000N 180:00:00.000E
- * 45:06:42:N:034:56:46:E (normalized format)
- *
- * Non-matches:
- * 91:00:00N 181:00:00E | 34:59:33Z 179:59:59W | 00:00:00N 181:00:00W
- * 90:00:00.001N 180:00:00.001E
- *
- * Groups:
- * [1] 90:00:00.000
- * [2] N
- * [3] 180:00:00.000
- * [4] E
- */
-export const RE_DMS = /^((?:\d|[0-8][0-9])(?::(?:[0-5]\d|\d))(?::(?:[0-5]\d|\d)(?:\.\d{1,3})?)|90(?::00)(?::00)(?:\.0{1,3})?)(?:\s|:)?([NS])(?:\s|:)?((?:0?\d\d|0?0?\d|1[0-7]\d)(?::(?:[0-5]\d|\d))(?::(?:[0-5]\d|\d)(?:\.\d{1,3})?)|180(?::00)(?::00)(?:\.0{1,3})?)(?:\s|:)?([EW])$/
+import { RE_DD, RE_DMS } from './regex'
 
 /**
  * Fills an array with the provided value X number of times
@@ -49,17 +27,44 @@ export function normalizeInput(value = '', sep = ':') {
 }
 
 /**
- * Returns true if the provided input is a valid (normalized) DMS string
+ * Converts a DD string into a DMS string
  *
- * @param {string} value   - input value
- * @returns {boolean}
+ * @param {string} value      - input value
+ * @param {number} precision  - DMS decimal places
+ * @returns {string}          - normalized DMS string
+ */
+export function convertInput(value, precision) {
+  if (validateDD(value)) {
+    const dd = value.split(',')
+    const lat = decimalToDMS(dd[0], false, precision)
+    const lon = decimalToDMS(dd[1], true, precision)
+    value = serializeDMS(lat, lon)
+  }
+  return value
+}
+
+/**
+ * Returns true if the provided value is a valid DD string
+ *
+ * @param {string} value  - input value
+ * @returns {boolean}     - is valid DD?
+ */
+export function validateDD(value) {
+  return RE_DD.test(value)
+}
+
+/**
+ * Returns true if the provided value is a valid (normalized) DMS string
+ *
+ * @param {string} value  - input value
+ * @returns {boolean}     - is valid DMS?
  */
 export function validateDMS(value) {
   return RE_DMS.test(value)
 }
 
 /**
- * Parse a DMS string into an object with latitude & longitude values
+ * Parses a DMS string into an array of lat/lon arrays
  *
  * @param {string} value  - DMS value, e.g. '04:08:15:N:162:03:42:E'
  * @param {string} sep    - separator
@@ -75,6 +80,36 @@ export function parseDMS(value, sep = ':') {
     [lat[0], lat[1], lat[2], match[1]],
     [lon[0], lon[1], lon[2], match[3]],
   ]
+}
+
+/**
+ * Serializes DMS lat/lon arrays into a normalized DMS string
+ *
+ * @param {array} lat   - DMS latitude, e.g. [4, 8, 15, 'N']
+ * @param {array} lon   - DMS longitude, e.g. [162, 3, 42, 'E']
+ * @param {string} sep  - separator
+ * @returns {string}    - '04:08:15:N:162:03:42:E'
+ */
+export function serializeDMS(lat, lon, sep = ':') {
+  const res = []
+
+  res[0] = lat
+    .map(item => item.toString().replace(/^(\d)(\.\d+)?$/, '0$1$2'))
+    .join(sep)
+
+  res[1] = lon
+    .map(
+      (item, i) =>
+        i === 0
+          ? item
+              .toString()
+              .replace(/^(\d)$/, '00$1')
+              .replace(/^(\d\d)$/, '0$1')
+          : item.toString().replace(/^(\d)(\.\d+)?$/, '0$1$2')
+    )
+    .join(sep)
+
+  return res.join(sep)
 }
 
 /**
@@ -113,7 +148,7 @@ export function dmsToDecimal(
  * @param {number} precision  - decimal places for seconds
  * @returns {array}           - DMS values, e.g. [D, M, S, 'N|S|E|W']
  */
-export function decimalToDMS(dd, isLon, precision = 3) {
+export function decimalToDMS(dd, isLon, precision = 0) {
   const factor = Math.pow(10, precision)
   const dir = dd < 0 ? (isLon ? 'W' : 'S') : isLon ? 'E' : 'N'
 

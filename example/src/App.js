@@ -22,6 +22,7 @@ export default class App extends Component {
       dms: '',
       dmsArray: [],
       dmsPrecision: 0,
+      showMask: false,
     }
   }
 
@@ -54,7 +55,8 @@ export default class App extends Component {
   }
 
   render() {
-    const { ddPrecision, dd, dms, dmsPrecision } = this.state
+    const { ddPrecision, dd, dmsPrecision, showMask } = this.state
+    const output = dd.join(', ')
     return (
       <section className="hero is-fullheight has-background-light">
         <div className="hero-body">
@@ -76,7 +78,8 @@ export default class App extends Component {
                       key={dmsPrecision + ddPrecision}
                       onChange={this.handleChange}
                       placeholder={this.getPlaceholder()}
-                      value={dms}
+                      showMask={showMask}
+                      value={output}
                     />
                   </div>
                 </div>
@@ -114,12 +117,11 @@ export default class App extends Component {
                       disabled
                       className="input"
                       type="text"
-                      value={dd.join(', ')}
+                      value={output}
                     />
                   </div>
                 </div>
               </div>
-
               <nav
                 className="breadcrumb has-bullet-separator is-centered"
                 aria-label="breadcrumbs"

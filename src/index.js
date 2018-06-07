@@ -8,53 +8,82 @@ import MaskedInput from 'react-text-mask'
 
 import createLatLongPipe from './createLatLongPipe'
 import createMask from './createMask'
-import { dmsToDecimal, normalizeInput, parseDMS, validateDMS } from './utils'
+import {
+  convertInput,
+  dmsToDecimal,
+  normalizeInput,
+  parseDMS,
+  validateDMS,
+} from './utils'
 
 export default class CoordinateInput extends Component {
   static propTypes = {
     className: PropTypes.string,
+    degreeChar: PropTypes.string,
     ddPrecision: PropTypes.number,
     dmsPrecision: PropTypes.number,
     guide: PropTypes.bool,
-    inputProps: PropTypes.object,
-    maskSymbols: PropTypes.shape({
-      degree: PropTypes.string,
-      minute: PropTypes.string,
-      second: PropTypes.string,
-      spacer: PropTypes.string,
-    }),
+    minuteChar: PropTypes.string,
     name: PropTypes.string,
     onBlur: PropTypes.func,
     onChange: PropTypes.func,
     placeholder: PropTypes.string,
     placeholderChar: PropTypes.string,
+    inputProps: PropTypes.object,
+    secondChar: PropTypes.string,
     showMask: PropTypes.bool,
+    spacerChar: PropTypes.string,
     value: PropTypes.string,
   }
 
   static defaultProps = {
+    guide: true,
+    showMask: false,
     ddPrecision: 6,
     dmsPrecision: 0,
-    guide: true,
-    maskSymbols: {
-      degree: '°',
-      minute: '′',
-      second: '″',
-      spacer: ' ',
-    },
-    onChange: () => {},
     placeholder: '04° 08′ 15″ N 162° 03′ 42″ E',
     placeholderChar: '_',
-    showMask: false,
+    degreeChar: '°',
+    minuteChar: '′',
+    secondChar: '″',
+    spacerChar: ' ',
+    onChange: () => {},
   }
 
   constructor(props) {
     super()
 
-    const { dmsPrecision, maskSymbols } = props
+    const {
+      dmsPrecision,
+      degreeChar,
+      minuteChar,
+      secondChar,
+      spacerChar,
+      value,
+    } = props
+
+    const maskOpts = Object.assign(
+      {},
+      {
+        degree: degreeChar,
+        minute: minuteChar,
+        second: secondChar,
+        space: spacerChar,
+        precision: dmsPrecision,
+      }
+    )
+
+    this.state = {
+      value,
+    }
 
     this.pipe = createLatLongPipe(dmsPrecision)
-    this.mask = createMask(maskSymbols, dmsPrecision)
+    this.mask = createMask(maskOpts)
+  }
+
+  static getDerivedStateFromProps(props) {
+    const value = convertInput(props.value, props.dmsPrecision)
+    return { value }
   }
 
   handleChange = e => {
@@ -79,6 +108,7 @@ export default class CoordinateInput extends Component {
   }
 
   render() {
+    const { value } = this.state
     const {
       className,
       guide,
@@ -88,7 +118,6 @@ export default class CoordinateInput extends Component {
       placeholder,
       placeholderChar,
       showMask,
-      value,
     } = this.props
 
     return (
