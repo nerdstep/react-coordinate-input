@@ -5,12 +5,12 @@
 [![NPM](https://img.shields.io/npm/v/react-coordinate-input.svg)](https://www.npmjs.com/package/react-coordinate-input)
 [![NPM](https://img.shields.io/npm/dt/react-coordinate-input.svg)](https://www.npmjs.com/package/react-coordinate-input)
 [![gzip size](http://img.badgesize.io/https://unpkg.com/react-coordinate-input/dist/index.js?compression=gzip)](https://unpkg.com/react-coordinate-input/dist/index.js)
+[![codecov](https://codecov.io/gh/nerdstep/react-coordinate-input/branch/master/graph/badge.svg)](https://codecov.io/gh/nerdstep/react-coordinate-input)
 [![license](https://img.shields.io/npm/l/react-coordinate-input.svg)](./LICENSE)
 
 
 ## Features
 
-- Lightweight at ~8kb gzipped
 - Masked input with [Text Mask](https://github.com/text-mask/text-mask)
 - Coordinate validation
 - Conversion to decimal degrees
