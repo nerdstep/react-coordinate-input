@@ -58,11 +58,11 @@ describe('dmsToDecimal', () => {
 describe('decimalToDMS', () => {
   data.forEach(item => {
     it(`Latitude: ${item[3][0]} -> ${item[2][0]}`, () => {
-      expect(decimalToDMS(item[3][0], false)).toEqual(item[2][0])
+      expect(decimalToDMS(item[3][0], false, 3)).toEqual(item[2][0])
     })
 
     it(`Longitude: ${item[3][1]} -> ${item[2][1]}`, () => {
-      expect(decimalToDMS(item[3][1], true)).toEqual(item[2][1])
+      expect(decimalToDMS(item[3][1], true, 3)).toEqual(item[2][1])
     })
   })
 })
