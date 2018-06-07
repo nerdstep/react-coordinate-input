@@ -27,6 +27,23 @@ export function normalizeInput(value = '', sep = ':') {
 }
 
 /**
+ * Converts a DD string into a DMS string
+ *
+ * @param {string} value      - input value
+ * @param {number} precision  - DMS decimal places
+ * @returns {string}          - normalized DMS string
+ */
+export function convertInput(value, precision) {
+  if (validateDD(value)) {
+    const dd = value.split(',')
+    const lat = decimalToDMS(dd[0], false, precision)
+    const lon = decimalToDMS(dd[1], true, precision)
+    value = serializeDMS(lat, lon)
+  }
+  return value
+}
+
+/**
  * Returns true if the provided value is a valid DD string
  *
  * @param {string} value  - input value
@@ -126,7 +143,7 @@ export function dmsToDecimal(
  * @param {number} precision  - decimal places for seconds
  * @returns {array}           - DMS values, e.g. [D, M, S, 'N|S|E|W']
  */
-export function decimalToDMS(dd, isLon, precision = 3) {
+export function decimalToDMS(dd, isLon, precision = 0) {
   const factor = Math.pow(10, precision)
   const dir = dd < 0 ? (isLon ? 'W' : 'S') : isLon ? 'E' : 'N'
 
