@@ -93,15 +93,20 @@ export function parseDMS(value, sep = ':') {
 export function serializeDMS(lat = [], lon = [], sep = ':') {
   const res = []
 
-  res[0] = lat.map(item => item.toString().replace(/^(\d)$/, '0$1')).join(sep)
+  res[0] = lat
+    .map(item => item.toString().replace(/^(\d)(\.\d+)?$/, '0$1$2'))
+    .join(sep)
 
   res[1] = lon
-    .map((item, i) => {
-      if (i === 0) {
-        return item.toString().replace(/^(\d\d)$/, '0$1')
-      }
-      return item.toString().replace(/^(\d)$/, '0$1')
-    })
+    .map(
+      (item, i) =>
+        i === 0
+          ? item
+              .toString()
+              .replace(/^(\d)$/, '00$1')
+              .replace(/^(\d\d)$/, '0$1')
+          : item.toString().replace(/^(\d)(\.\d+)?$/, '0$1$2')
+    )
     .join(sep)
 
   return res.join(sep)
