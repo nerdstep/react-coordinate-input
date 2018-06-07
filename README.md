@@ -7,20 +7,26 @@
 [![gzip size](http://img.badgesize.io/https://unpkg.com/react-coordinate-input/dist/index.js?compression=gzip)](https://unpkg.com/react-coordinate-input/dist/index.js)
 [![license](https://img.shields.io/npm/l/react-coordinate-input.svg)](./LICENSE)
 
+
 ## Features
 
 - Lightweight at ~8kb gzipped
 - Masked input with [Text Mask](https://github.com/text-mask/text-mask)
 - Coordinate validation
 - Conversion to decimal degrees
+- Accepts decimal degree passed in as `value` prop
+- Second precision up to 6 decimal places
+- Decimal degree precision up to 8 decimal places
 
 ## [Demo](https://nerdstep.github.io/react-coordinate-input/)
+
 
 ## Install
 
 ```bash
 npm install --save react-coordinate-input
 ```
+
 
 ## Usage
 
@@ -50,29 +56,39 @@ See the [Text Mask](https://github.com/text-mask/text-mask/blob/master/component
 ```javascript
 {
   className: undefined,
-  // Number of decimal places to round decimal degrees to (0-8)
-  ddPrecision: 6,
-  // Number of decimal places for Seconds value on input (0-6)
-  dmsPrecision: 0,
-  // Tells the component whether to be in guide or no guide mode
-  guide: true,
-  // Use this to pass additional props to the underlying input
-  inputProps: undefined,
-  maskSymbols: {
-    degree: '°',
-    minute: '′',
-    second: '″',
-    spacer: ' ',
-  },
   name: undefined,
   onBlur: undefined,
-  onChange: () => {},
   placeholder: '04° 08′ 15″ N 162° 03′ 42″ E',
-  // The placeholder character represents the fillable spot in the input mask
-  placeholderChar: '_',
+
+  // See below for more info on the onChange callback
+  onChange: () => {},
+
+  // Number of decimal places to round decimal degrees to (0-8)
+  ddPrecision: 6,
+
+  // Number of decimal places for Seconds value on input (0-6)
+  dmsPrecision: 0,
+
+  // Tells the component whether to be in guide or no guide mode
+  guide: true,
+
   // Tells the Text Mask component to display the mask as a placeholder,
   // in place of the regular placeholder when the input element value is empty.
   showMask: false,
+
+  // Use this to pass additional props to the underlying input
+  inputProps: undefined,
+
+  // The placeholder character represents the fillable spot in the input mask
+  placeholderChar: '_',
+
+  // DMS characters used in the input mask
+  degreeChar: '°',
+  minuteChar: '′',
+  secondChar: '″',
+  spacerChar: ' ',
+
+  // Input value -- see below for more info
   value: undefined,
 }
 ```
@@ -96,6 +112,21 @@ The callback receives two arguments, the original event and an object with three
   ]
 }
 ```
+
+### Input value
+
+When providing a value to the input the following formats are supported:
+
+1. DMS value which conforms to the input mask, e.g. `04° 08′ 15″ N 162° 03′ 42″ E`
+
+**Note:** The DMS symbols are not required, a minimal input would also work, e.g. `04 08 15N 162 03 42E`
+
+The only requirement is that a separating character is between each value and each value is two characters, i.e. `04` not `4`, except for longitude degrees which requires three characters.
+
+2. Decimal degree string can also be used, e.g. `4.1375, 162.061667`
+
+The component will detect the DD value and convert it to a DMS value automatically.
+
 
 ## License
 
