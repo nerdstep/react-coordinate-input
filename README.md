@@ -6,8 +6,10 @@
 [![NPM](https://img.shields.io/npm/dt/react-coordinate-input.svg)](https://www.npmjs.com/package/react-coordinate-input)
 [![gzip size](http://img.badgesize.io/https://unpkg.com/react-coordinate-input/dist/index.js?compression=gzip)](https://unpkg.com/react-coordinate-input/dist/index.js)
 [![codecov](https://codecov.io/gh/nerdstep/react-coordinate-input/branch/master/graph/badge.svg)](https://codecov.io/gh/nerdstep/react-coordinate-input)
-[![license](https://img.shields.io/npm/l/react-coordinate-input.svg)](./LICENSE) [![Greenkeeper badge](https://badges.greenkeeper.io/nerdstep/react-coordinate-input.svg)](https://greenkeeper.io/)
-
+[![license](https://img.shields.io/npm/l/react-coordinate-input.svg)](./LICENSE) 
+[![Greenkeeper badge](https://badges.greenkeeper.io/nerdstep/react-coordinate-input.svg)](https://greenkeeper.io/)
+[![Build Status](https://travis-ci.org/nerdstep/react-coordinate-input.svg?branch=master)](https://travis-ci.org/nerdstep/react-coordinate-input)
+[![license](https://img.shields.io/npm/l/react-coordinate-input.svg)](./LICENSE)
 
 ## Features
 
