@@ -1,15 +1,15 @@
 {
   "name": "react-coordinate-input-example",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "license": "MIT",
   "private": true,
   "homepage": "https://nerdstep.github.io/react-coordinate-input",
   "dependencies": {
     "bulma": "^0.7.1",
-    "prop-types": "^15.6.1",
-    "react": "^16.2.0",
+    "prop-types": "^15.6.2",
+    "react": "^16.4.2",
     "react-coordinate-input": "link:..",
-    "react-dom": "^16.2.0",
+    "react-dom": "^16.4.2",
     "react-scripts": "^1.1.1"
   },
   "scripts": {
