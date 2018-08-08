@@ -2,13 +2,13 @@
 
 > A masked input React component for entering latitude &amp; longitude coordinates as Degree Minute Second (DMS) values, with built-in conversion to Decimal Degrees.
 
-[![NPM](https://img.shields.io/npm/v/react-coordinate-input.svg)](https://www.npmjs.com/package/react-coordinate-input)
-[![NPM](https://img.shields.io/npm/dt/react-coordinate-input.svg)](https://www.npmjs.com/package/react-coordinate-input)
-[![gzip size](http://img.badgesize.io/https://unpkg.com/react-coordinate-input/dist/index.js?compression=gzip)](https://unpkg.com/react-coordinate-input/dist/index.js)
-[![codecov](https://codecov.io/gh/nerdstep/react-coordinate-input/branch/master/graph/badge.svg)](https://codecov.io/gh/nerdstep/react-coordinate-input)
-[![Greenkeeper badge](https://badges.greenkeeper.io/nerdstep/react-coordinate-input.svg)](https://greenkeeper.io/)
-[![Build Status](https://travis-ci.org/nerdstep/react-coordinate-input.svg?branch=master)](https://travis-ci.org/nerdstep/react-coordinate-input)
-[![license](https://img.shields.io/npm/l/react-coordinate-input.svg)](./LICENSE)
+[![NPM](https://flat.badgen.net/npm/v/react-coordinate-input)](https://www.npmjs.com/package/react-coordinate-input)
+[![NPM](https://flat.badgen.net/npm/dt/react-coordinate-input)](https://www.npmjs.com/package/react-coordinate-input)
+[![gzip size](https://flat.badgen.net/bundlephobia/minzip/react-coordinate-input)](https://unpkg.com/react-coordinate-input/dist/index.js)
+[![codecov](https://flat.badgen.net/codecov/c/github/nerdstep/react-coordinate-input)](https://codecov.io/gh/nerdstep/react-coordinate-input)
+[![Greenkeeper badge](https://flat.badgen.net/badge/Greenkeeper/enabled/green)](https://greenkeeper.io/)
+[![Build Status](https://flat.badgen.net/travis/nerdstep/react-coordinate-input)](https://travis-ci.org/nerdstep/react-coordinate-input)
+[![license](https://flat.badgen.net/github/license/nerdstep/react-coordinate-input)](./LICENSE)
 
 ## Features
 
