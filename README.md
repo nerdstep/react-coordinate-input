@@ -4,7 +4,7 @@
 
 [![NPM](https://flat.badgen.net/npm/v/react-coordinate-input)](https://www.npmjs.com/package/react-coordinate-input)
 [![NPM](https://flat.badgen.net/npm/dt/react-coordinate-input)](https://www.npmjs.com/package/react-coordinate-input)
-[![gzip size](https://flat.badgen.net/bundlephobia/minzip/react-coordinate-input)](https://unpkg.com/react-coordinate-input/dist/index.js)
+[![gzip size](https://flat.badgen.net/bundlephobia/minzip/react-coordinate-input)](https://bundlephobia.com/result?p=react-coordinate-input)
 [![codecov](https://flat.badgen.net/codecov/c/github/nerdstep/react-coordinate-input)](https://codecov.io/gh/nerdstep/react-coordinate-input)
 [![Greenkeeper badge](https://flat.badgen.net/badge/Greenkeeper/enabled/green)](https://greenkeeper.io/)
 [![Build Status](https://flat.badgen.net/travis/nerdstep/react-coordinate-input)](https://travis-ci.org/nerdstep/react-coordinate-input)
