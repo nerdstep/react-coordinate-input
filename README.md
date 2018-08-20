@@ -4,7 +4,7 @@
 
 [![NPM](https://flat.badgen.net/npm/v/react-coordinate-input)](https://www.npmjs.com/package/react-coordinate-input)
 [![NPM](https://flat.badgen.net/npm/dt/react-coordinate-input)](https://www.npmjs.com/package/react-coordinate-input)
-[![gzip size](https://flat.badgen.net/bundlephobia/minzip/react-coordinate-input)](https://unpkg.com/react-coordinate-input/dist/index.js)
+[![gzip size](https://flat.badgen.net/bundlephobia/minzip/react-coordinate-input)](https://bundlephobia.com/result?p=react-coordinate-input)
 [![codecov](https://flat.badgen.net/codecov/c/github/nerdstep/react-coordinate-input)](https://codecov.io/gh/nerdstep/react-coordinate-input)
 [![Greenkeeper badge](https://flat.badgen.net/badge/Greenkeeper/enabled/green)](https://greenkeeper.io/)
 [![Build Status](https://flat.badgen.net/travis/nerdstep/react-coordinate-input)](https://travis-ci.org/nerdstep/react-coordinate-input)
@@ -21,13 +21,11 @@
 
 ## [Demo](https://nerdstep.github.io/react-coordinate-input/)
 
-
 ## Install
 
 ```bash
 npm install --save react-coordinate-input
 ```
-
 
 ## Usage
 
@@ -40,10 +38,8 @@ class Example extends Component {
     console.log(e.target.value, dd, dms, dmsArray)
   }
 
-  render () {
-    return (
-      <CoordinateInput onChange={this.handleChange} />
-    )
+  render() {
+    return <CoordinateInput onChange={this.handleChange} />
   }
 }
 ```
@@ -127,7 +123,6 @@ The only requirement is that a separating character is between each value and ea
 2. Decimal degree string can also be used, e.g. `4.1375, 162.061667`
 
 The component will detect the DD value and convert it to a DMS value automatically.
-
 
 ## License
 
