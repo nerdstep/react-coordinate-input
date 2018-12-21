@@ -43,9 +43,11 @@ export function normalizeInput(value = '', sep = ':') {
 export function convertInput(value, precision) {
   if (validateDD(value)) {
     const dd = value.split(',')
-    const lat = decimalToDMS(dd[0], false, precision)
-    const lon = decimalToDMS(dd[1], true, precision)
-    value = serializeDMS(lat, lon)
+    const lat = parseFloat(dd[0])
+    const lon = parseFloat(dd[1])
+    const latArr = decimalToDMS(lat, false, precision)
+    const lonArr = decimalToDMS(lon, true, precision)
+    value = serializeDMS(latArr, lonArr)
   }
   return value
 }
