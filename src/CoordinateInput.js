@@ -1,3 +1,4 @@
+// @ts-check
 /**
  * @class CoordinateInput
  */
@@ -50,7 +51,7 @@ export default class CoordinateInput extends Component {
   }
 
   constructor(props) {
-    super()
+    super(props)
 
     const {
       dmsPrecision,
@@ -98,8 +99,13 @@ export default class CoordinateInput extends Component {
       // Otherwise only callback if the value is a valid DMS
     } else if (valid) {
       const dmsArray = parseDMS(dms)
+
+      // @ts-ignore {https://github.com/Microsoft/TypeScript/pull/24897}
       const lat = dmsToDecimal(...dmsArray[0], ddPrecision)
+      // @ts-ignore
       const lon = dmsToDecimal(...dmsArray[1], ddPrecision)
+
+      //console.log('handleChange', { value, dmsArray, lat, lon })
 
       // Callback with the original event and the converted values
       onChange(e, { dd: [lat, lon], dms, dmsArray })
