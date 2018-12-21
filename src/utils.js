@@ -169,9 +169,9 @@ export function decimalToDMS(dd, isLon, precision = 0) {
   const factor = Math.pow(10, precision)
   const dir = dd < 0 ? (isLon ? 'W' : 'S') : isLon ? 'E' : 'N'
 
-  let d = parseInt(dd, 10) // truncate dd to get degrees
+  let d = Math.trunc(dd) // truncate dd to get degrees
   const frac = Math.abs(dd - d) // get fractional part
-  const m = parseInt(frac * 60, 10) // multiply fraction by 60 and truncate
+  const m = Math.trunc(frac * 60) // multiply fraction by 60 and truncate
   let s = frac * 3600 - m * 60
 
   // Round the result to the given precision
