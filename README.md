@@ -79,6 +79,9 @@ See the [Text Mask](https://github.com/text-mask/text-mask/blob/master/component
   // Use this to pass additional props to the underlying input
   inputProps: undefined,
 
+  // Callback function which receives the input ref
+  inputRef: undefined
+
   // The placeholder character represents the fillable spot in the input mask
   placeholderChar: '_',
 

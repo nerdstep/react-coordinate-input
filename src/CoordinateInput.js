@@ -1,8 +1,7 @@
 // @ts-check
-/**
- * @class CoordinateInput
- */
-
+// @TODO fix value not updating
+// https://github.com/text-mask/text-mask/issues/806
+// https://github.com/text-mask/text-mask/pull/807
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import MaskedInput from 'react-text-mask'
@@ -16,6 +15,9 @@ import {
   validateDMS,
 } from './utils'
 
+/**
+ * @class CoordinateInput
+ */
 export default class CoordinateInput extends Component {
   static propTypes = {
     className: PropTypes.string,
@@ -30,6 +32,7 @@ export default class CoordinateInput extends Component {
     placeholder: PropTypes.string,
     placeholderChar: PropTypes.string,
     inputProps: PropTypes.object,
+    inputRef: PropTypes.func,
     secondChar: PropTypes.string,
     showMask: PropTypes.bool,
     spacerChar: PropTypes.string,
@@ -112,6 +115,14 @@ export default class CoordinateInput extends Component {
     }
   }
 
+  setRef = ref => {
+    this.inputRef = ref
+
+    if (typeof this.props.inputRef === 'function') {
+      this.props.inputRef(ref)
+    }
+  }
+
   render() {
     const { value } = this.state
     const {
@@ -131,6 +142,7 @@ export default class CoordinateInput extends Component {
         dir="auto"
         guide={guide}
         className={className}
+        key={value}
         mask={this.mask}
         name={name}
         onBlur={onBlur}
@@ -138,6 +150,7 @@ export default class CoordinateInput extends Component {
         pipe={this.pipe}
         placeholder={placeholder}
         placeholderChar={placeholderChar}
+        ref={this.setRef}
         showMask={showMask}
         type="text"
         value={value}
