@@ -16,7 +16,6 @@ export default class App extends Component {
     this.state = {
       dd: [],
       ddPrecision: 6,
-      defaultValue: '90, -180',
       dms: '',
       dmsArray: [],
       dmsPrecision: 0,
@@ -57,19 +56,13 @@ export default class App extends Component {
     this.setState({ value: '' })
   }
 
-  handleSetValue = () => {
-    this.setState({ value: this.state.defaultValue })
+  handleSetValue = e => {
+    const { value } = e.target
+    this.setState({ value })
   }
 
   render() {
-    const {
-      ddPrecision,
-      dd,
-      defaultValue,
-      dmsPrecision,
-      showMask,
-      value,
-    } = this.state
+    const { ddPrecision, dd, dmsPrecision, showMask, value } = this.state
     return (
       <section className="hero is-fullheight has-background-light">
         <div className="hero-body">
@@ -88,6 +81,8 @@ export default class App extends Component {
                       className="input"
                       ddPrecision={ddPrecision}
                       dmsPrecision={dmsPrecision}
+                      inputProps={{ id: 'react-coord-input' }}
+                      key={JSON.stringify(this.props)}
                       onChange={this.handleChange}
                       placeholder={this.getPlaceholder()}
                       showMask={showMask}
@@ -97,10 +92,14 @@ export default class App extends Component {
                 </div>
                 <div className="field is-grouped">
                   <div className="control">
-                    <button className="button" onClick={this.handleSetValue}>
-                      Set value to&nbsp;
-                      <span className="tag is-dark">{defaultValue}</span>
-                    </button>
+                    <div className="select">
+                      <select onChange={this.handleSetValue}>
+                        <option value="">Set value...</option>
+                        <option>90, -180</option>
+                        <option>-90, 180</option>
+                        <option>42.363, 27.891</option>
+                      </select>
+                    </div>
                   </div>
                   <div className="control">
                     <button className="button" onClick={this.handleReset}>
