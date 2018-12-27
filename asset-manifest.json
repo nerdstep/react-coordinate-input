@@ -1,6 +1,13 @@
 {
-  "main.css": "static/css/main.522bb0ae.css",
-  "main.css.map": "static/css/main.522bb0ae.css.map",
-  "main.js": "static/js/main.83ab2efc.js",
-  "main.js.map": "static/js/main.83ab2efc.js.map"
+  "main.js": "/react-coordinate-input/static/js/main.fa336e0c.chunk.js",
+  "main.js.map": "/react-coordinate-input/static/js/main.fa336e0c.chunk.js.map",
+  "static/css/1.508234eb.chunk.css": "/react-coordinate-input/static/css/1.508234eb.chunk.css",
+  "static/js/1.5f95bd8d.chunk.js": "/react-coordinate-input/static/js/1.5f95bd8d.chunk.js",
+  "static/js/1.5f95bd8d.chunk.js.map": "/react-coordinate-input/static/js/1.5f95bd8d.chunk.js.map",
+  "runtime~main.js": "/react-coordinate-input/static/js/runtime~main.2bdca8dc.js",
+  "runtime~main.js.map": "/react-coordinate-input/static/js/runtime~main.2bdca8dc.js.map",
+  "static/css/1.508234eb.chunk.css.map": "/react-coordinate-input/static/css/1.508234eb.chunk.css.map",
+  "index.html": "/react-coordinate-input/index.html",
+  "precache-manifest.658fc8267104239409ae6b53318ef7e6.js": "/react-coordinate-input/precache-manifest.658fc8267104239409ae6b53318ef7e6.js",
+  "service-worker.js": "/react-coordinate-input/service-worker.js"
 }
