@@ -1,5 +1,6 @@
 // @ts-check
 // @TODO fix value not updating
+// https://github.com/text-mask/text-mask/issues/887
 // https://github.com/text-mask/text-mask/issues/806
 // https://github.com/text-mask/text-mask/pull/807
 import PropTypes from 'prop-types'
