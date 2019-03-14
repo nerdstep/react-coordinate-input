@@ -12,7 +12,9 @@ export default {
   output: [
     {
       file: pkg.main,
-      format: 'cjs',
+      format: 'umd',
+      name: 'reactCoordinateInput',
+      globals: { react: 'react', 'prop-types': 'prop-types' },
       exports: 'named',
     },
     {
@@ -20,6 +22,7 @@ export default {
       format: 'es',
     },
   ],
+  external: ['react', 'prop-types'],
   plugins: [
     external(),
     postcss({
