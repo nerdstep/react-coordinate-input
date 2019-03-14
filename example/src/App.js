@@ -1,9 +1,6 @@
 import React, { Component } from 'react'
-
 import CoordinateInput from 'react-coordinate-input'
-
-const repoName = 'nerdstep/react-coordinate-input'
-const repoUrl = `https://github.com/${repoName}`
+import Footer from './Footer'
 
 function fill(arr, value, count) {
   for (let i = 0; i < count; i++) {
@@ -14,7 +11,7 @@ function fill(arr, value, count) {
 
 export default class App extends Component {
   constructor(props) {
-    super()
+    super(props)
 
     this.state = {
       dd: [],
@@ -23,6 +20,7 @@ export default class App extends Component {
       dmsArray: [],
       dmsPrecision: 0,
       showMask: false,
+      value: '',
     }
   }
 
@@ -38,8 +36,8 @@ export default class App extends Component {
   }
 
   handleChange = (e, { dd, dms, dmsArray }) => {
-    console.log(e.target.value, dd, dms, dmsArray)
-    this.setState({ dd, dms, dmsArray })
+    console.log('onChange', { value: e.target.value, dd, dms, dmsArray })
+    this.setState({ dd, dms, dmsArray, value: dd.join(',') })
   }
 
   handleChangeDDPrecision = e => {
@@ -54,9 +52,17 @@ export default class App extends Component {
     this.setState({ dmsPrecision: value })
   }
 
+  handleReset = () => {
+    this.setState({ value: '' })
+  }
+
+  handleSetValue = e => {
+    const { value } = e.target
+    this.setState({ value })
+  }
+
   render() {
-    const { ddPrecision, dd, dmsPrecision, showMask } = this.state
-    const output = dd.join(', ')
+    const { ddPrecision, dd, dmsPrecision, showMask, value } = this.state
     return (
       <section className="hero is-fullheight has-background-light">
         <div className="hero-body">
@@ -75,12 +81,30 @@ export default class App extends Component {
                       className="input"
                       ddPrecision={ddPrecision}
                       dmsPrecision={dmsPrecision}
-                      key={dmsPrecision + ddPrecision}
+                      inputProps={{ id: 'react-coord-input' }}
+                      key={JSON.stringify(this.props)}
                       onChange={this.handleChange}
                       placeholder={this.getPlaceholder()}
                       showMask={showMask}
-                      value={output}
+                      value={value}
                     />
+                  </div>
+                </div>
+                <div className="field is-grouped">
+                  <div className="control">
+                    <div className="select">
+                      <select onChange={this.handleSetValue}>
+                        <option value="">Set value...</option>
+                        <option>90, -180</option>
+                        <option>-90, 180</option>
+                        <option>42.363, 27.891</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div className="control">
+                    <button className="button" onClick={this.handleReset}>
+                      Clear
+                    </button>
                   </div>
                 </div>
                 <h5>Options</h5>
@@ -90,7 +114,7 @@ export default class App extends Component {
                   </label>
                   <div className="control">
                     <input
-                      className="input is-small"
+                      className="input"
                       onChange={this.handleChangeDMSPrecision}
                       type="number"
                       value={dmsPrecision}
@@ -103,7 +127,7 @@ export default class App extends Component {
                   </label>
                   <div className="control">
                     <input
-                      className="input is-small"
+                      className="input"
                       onChange={this.handleChangeDDPrecision}
                       type="number"
                       value={ddPrecision}
@@ -113,41 +137,11 @@ export default class App extends Component {
                 <div className="field">
                   <label className="label">Output - Decimal Degrees</label>
                   <div className="control">
-                    <input
-                      disabled
-                      className="input"
-                      type="text"
-                      value={output}
-                    />
+                    <input disabled className="input" type="text" value={dd} />
                   </div>
                 </div>
               </div>
-              <nav
-                className="breadcrumb has-bullet-separator is-centered"
-                aria-label="breadcrumbs"
-              >
-                <ul>
-                  <li>
-                    <a href={repoUrl}>GitHub</a>
-                  </li>
-                  <li>
-                    <a href={repoUrl}>
-                      <img
-                        src={`https://img.shields.io/github/forks/${repoName}.svg?style=social&amp;label=Fork&amp;maxAge=2592000`}
-                        alt="GitHub forks"
-                      />
-                    </a>
-                  </li>
-                  <li>
-                    <a href={repoUrl}>
-                      <img
-                        src={`https://img.shields.io/github/stars/${repoName}.svg?style=social&amp;label=Stars&amp;maxAge=2592000`}
-                        alt="GitHub stars"
-                      />
-                    </a>
-                  </li>
-                </ul>
-              </nav>
+              <Footer />
             </div>
           </div>
         </div>

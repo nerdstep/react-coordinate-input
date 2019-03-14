@@ -1,3 +1,5 @@
+// @ts-check
+
 /**
  * Latitude/Longitude as Degrees, Minutes, Seconds
  * Ref: https://regexr.com/3qgn3

@@ -1,9 +1,19 @@
+// @ts-check
 import { fill } from './utils'
 
 const DIGIT = /\d/
 const NS = /[nNsS]/
 const EW = /[eEwW]/
 
+/**
+ * createPart
+ *
+ * @param {string} symbol Symbol character
+ * @param {string} spacer Spacer character
+ * @param {number} digits Number of digits
+ * @param {number} precision Decimal places
+ * @returns {any[]}
+ */
 const createPart = (symbol, spacer, digits, precision) => {
   const res = []
 
@@ -21,15 +31,17 @@ const createPart = (symbol, spacer, digits, precision) => {
 }
 
 /**
+ * createMask
+ *
  * Returns an input mask using the provided symbols
  *
- * @param {object} opts           - mask options
- * @param {string} opts.degree    - degrees symbol, e.g. °
- * @param {string} opts.minute    - minutes symbol e.g. ′
- * @param {string} opts.second    - seconds symbol e.g. ″
- * @param {string} opts.spacer    - space character
- * @param {number} opts.precision - decimal places
- * @return {array}                - input mask
+ * @param {Object} options Mask options
+ * @property {string} degree Degrees symbol, e.g. °
+ * @property {string} minute Minutes symbol e.g. ′
+ * @property {string} second Seconds symbol e.g. ″
+ * @property {string} spacer Spacer character
+ * @property {number} precision Decimal places
+ * @returns {any[]} Input mask
  */
 export default function createMask({
   degree = '°',
