@@ -1,8 +1,11 @@
 {
   "name": "react-coordinate-input",
-  "version": "0.7.0",
-  "description": "A masked input React component for latitude &amp; longitude coordinates.",
-  "author": "Justin M. Williams <justinwilliams42@gmail.com>",
+  "version": "0.7.1",
+  "description": "A masked input React component for latitude & longitude coordinates.",
+  "author": {
+    "name": "Justin Williams",
+    "email": "justinwilliams42@gmail.com"
+  },
   "license": "MIT",
   "repository": "nerdstep/react-coordinate-input",
   "main": "dist/index.umd.js",
