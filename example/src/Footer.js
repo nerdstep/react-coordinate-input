@@ -2,7 +2,7 @@ import React from 'react'
 
 const repoName = 'nerdstep/react-coordinate-input'
 const repoUrl = `https://github.com/${repoName}`
-const repoImg = 'https://flat.badgen.net/badge//github?icon=github'
+const tagImg = `https://flat.badgen.net/github/tag/${repoName}`
 const forksImg = `https://flat.badgen.net/github/forks/${repoName}`
 const starsImg = `https://flat.badgen.net/github/stars/${repoName}`
 
@@ -14,7 +14,7 @@ const Footer = () => (
     <ul>
       <li style={{ height: 24 }}>
         <a href={repoUrl}>
-          <img src={repoImg} alt="GitHub" style={{ height: 20 }} />
+          <img src={tagImg} alt="GitHub latest tag" />
         </a>
       </li>
       <li>
