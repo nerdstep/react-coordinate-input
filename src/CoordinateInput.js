@@ -90,6 +90,17 @@ export default class CoordinateInput extends Component {
     return { value }
   }
 
+  handleBlur = () => {
+    if (this.inputRef) {
+      const { value } = this.inputRef.inputElement
+      this.handleChange({ target: { value } })
+    }
+
+    if (typeof this.props.onBlur === 'function') {
+      this.props.onBlur()
+    }
+  }
+
   handleChange = e => {
     const { ddPrecision, onChange } = this.props
     const { value } = e.target
@@ -117,10 +128,12 @@ export default class CoordinateInput extends Component {
   }
 
   setRef = ref => {
-    this.inputRef = ref
+    if (ref) {
+      this.inputRef = ref
 
-    if (typeof this.props.inputRef === 'function') {
-      this.props.inputRef(ref)
+      if (typeof this.props.inputRef === 'function') {
+        this.props.inputRef(ref.inputElement)
+      }
     }
   }
 
@@ -131,7 +144,6 @@ export default class CoordinateInput extends Component {
       guide,
       inputProps,
       name,
-      onBlur,
       placeholder,
       placeholderChar,
       showMask,
@@ -146,7 +158,7 @@ export default class CoordinateInput extends Component {
         key={value}
         mask={this.mask}
         name={name}
-        onBlur={onBlur}
+        onBlur={this.handleBlur}
         onChange={this.handleChange}
         pipe={this.pipe}
         placeholder={placeholder}
