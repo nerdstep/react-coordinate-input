@@ -16,10 +16,12 @@ export default {
       name: 'reactCoordinateInput',
       globals: { react: 'react', 'prop-types': 'prop-types' },
       exports: 'named',
+      sourcemap: true,
     },
     {
       file: pkg.module,
       format: 'es',
+      sourcemap: true,
     },
   ],
   external: ['react', 'prop-types'],
