@@ -36,6 +36,7 @@ exports[`CoordinateInput should call the onChange handler with empty results 1`]
       /\\[eEwW\\]/,
     ]
   }
+  onBlur={[Function]}
   onChange={[Function]}
   pipe={[Function]}
   placeholder="04° 08′ 15″ N 162° 03′ 42″ E"
@@ -90,6 +91,7 @@ exports[`CoordinateInput should call the onChange handler with the converted res
       /\\[eEwW\\]/,
     ]
   }
+  onBlur={[Function]}
   onChange={[Function]}
   pipe={[Function]}
   placeholder="04° 08′ 15″ N 162° 03′ 42″ E"
@@ -136,6 +138,7 @@ exports[`CoordinateInput should match the snapshot 1`] = `
       /\\[eEwW\\]/,
     ]
   }
+  onBlur={[Function]}
   onChange={[Function]}
   pipe={[Function]}
   placeholder="04° 08′ 15″ N 162° 03′ 42″ E"
@@ -190,6 +193,7 @@ exports[`CoordinateInput should match the snapshot 2`] = `
       /\\[eEwW\\]/,
     ]
   }
+  onBlur={[Function]}
   onChange={[Function]}
   pipe={[Function]}
   placeholder="04° 08′ 15″ N 162° 03′ 42″ E"
@@ -236,6 +240,7 @@ exports[`CoordinateInput should match the snapshot 3`] = `
       /\\[eEwW\\]/,
     ]
   }
+  onBlur={[Function]}
   onChange={[Function]}
   pipe={[Function]}
   placeholder="04° 08′ 15″ N 162° 03′ 42″ E"
