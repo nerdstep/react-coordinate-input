@@ -36,7 +36,7 @@ export default class App extends Component {
   }
 
   handleChange = (e, { dd, dms, dmsArray }) => {
-    console.log('onChange', { value: e.target.value, dd, dms, dmsArray })
+    console.log('handleChange', { value: e.target.value, dd, dms, dmsArray })
     this.setState({ dd, dms, dmsArray, value: dd.join(',') })
   }
 
@@ -58,7 +58,12 @@ export default class App extends Component {
 
   handleSetValue = e => {
     const { value } = e.target
-    this.setState({ value })
+
+    //console.log('handleSetValue', value, this.inputRef)
+
+    this.setState({ value }, () => {
+      this.inputRef.onBlur()
+    })
   }
 
   render() {
@@ -82,6 +87,7 @@ export default class App extends Component {
                       ddPrecision={ddPrecision}
                       dmsPrecision={dmsPrecision}
                       inputProps={{ id: 'react-coord-input' }}
+                      inputRef={c => (this.inputRef = c)}
                       key={JSON.stringify(this.props)}
                       onChange={this.handleChange}
                       placeholder={this.getPlaceholder()}
@@ -93,11 +99,15 @@ export default class App extends Component {
                 <div className="field is-grouped">
                   <div className="control">
                     <div className="select">
-                      <select onChange={this.handleSetValue}>
+                      <select
+                        onChange={this.handleSetValue}
+                        value={this.state.value}
+                      >
                         <option value="">Set value...</option>
                         <option>90, -180</option>
                         <option>-90, 180</option>
                         <option>42.363, 27.891</option>
+                        <option>422700N 0670600W</option>
                       </select>
                     </div>
                   </div>
