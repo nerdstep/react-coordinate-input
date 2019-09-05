@@ -1,5 +1,4 @@
 // @ts-check
-// @TODO fix value not updating
 // https://github.com/text-mask/text-mask/issues/887
 // https://github.com/text-mask/text-mask/issues/806
 // https://github.com/text-mask/text-mask/pull/807
@@ -51,6 +50,7 @@ export default class CoordinateInput extends Component {
     minuteChar: '′',
     secondChar: '″',
     spacerChar: ' ',
+    onBlur: () => {},
     onChange: () => {},
   }
 
@@ -96,9 +96,7 @@ export default class CoordinateInput extends Component {
       this.handleChange({ target: { value } })
     }
 
-    if (typeof this.props.onBlur === 'function') {
-      this.props.onBlur()
-    }
+    this.props.onBlur()
   }
 
   handleChange = e => {
@@ -132,7 +130,7 @@ export default class CoordinateInput extends Component {
       this.inputRef = ref
 
       if (typeof this.props.inputRef === 'function') {
-        this.props.inputRef(ref.inputElement)
+        this.props.inputRef(ref)
       }
     }
   }
