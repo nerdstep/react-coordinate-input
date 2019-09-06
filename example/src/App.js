@@ -41,19 +41,21 @@ export default class App extends Component {
   }
 
   handleChangeDDPrecision = e => {
+    this.handleReset()
     let value = parseInt(e.target.value, 10) || 0
     value = value < 0 ? 0 : value > 8 ? 8 : value
     this.setState({ ddPrecision: value })
   }
 
   handleChangeDMSPrecision = e => {
+    this.handleReset()
     let value = parseInt(e.target.value, 10) || 0
     value = value < 0 ? 0 : value > 6 ? 6 : value
     this.setState({ dmsPrecision: value })
   }
 
   handleReset = () => {
-    this.setState({ value: '' })
+    this.setState({ dd: '', value: '' })
   }
 
   handleSetValue = e => {
@@ -61,7 +63,7 @@ export default class App extends Component {
 
     //console.log('handleSetValue', value, this.inputRef)
 
-    this.setState({ value }, () => {
+    this.setState({ dmsPrecision: 0, value }, () => {
       this.inputRef.onBlur()
     })
   }
