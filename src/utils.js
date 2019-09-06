@@ -169,19 +169,28 @@ export function dmsToDecimal(
  */
 export function decimalToDMS(dd, isLon, precision = 0) {
   const factor = Math.pow(10, precision)
-  const dir = dd < 0 ? (isLon ? 'W' : 'S') : isLon ? 'E' : 'N'
+  const direction = dd < 0 ? (isLon ? 'W' : 'S') : isLon ? 'E' : 'N'
 
-  let d = Math.trunc(dd) // truncate dd to get degrees
-  const frac = Math.abs(dd - d) // get fractional part
-  const m = Math.trunc(frac * 60) // multiply fraction by 60 and truncate
-  let s = frac * 3600 - m * 60
+  // Ensure degrees is a positive value
+  const absolute = Math.abs(dd)
+  let degrees = Math.floor(absolute)
+  const minutesFloat = (absolute - degrees) * 60
+  let minutes = Math.floor(minutesFloat)
+  let seconds = (minutesFloat - minutes) * 60
 
-  // Round the result to the given precision
-  s = Math.round(s * factor) / factor
+  // Round seconds to the given precision
+  seconds = Math.round(seconds * factor) / factor
 
-  // Ensure degrees is a positive value,
-  // since we're returning direction as a string value
-  d = Math.abs(d)
+  // Ensure minutes & seconds are not 60
+  if (seconds === 60) {
+    minutes++
+    seconds = 0
+  }
 
-  return [d, m, s, dir]
+  if (minutes === 60) {
+    degrees++
+    minutes = 0
+  }
+
+  return [degrees, minutes, seconds, direction]
 }
