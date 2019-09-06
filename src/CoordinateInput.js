@@ -15,6 +15,24 @@ import {
   validateDMS,
 } from './utils'
 
+const getMaskOptions = ({
+  dmsPrecision,
+  degreeChar,
+  minuteChar,
+  secondChar,
+  spacerChar,
+}) =>
+  Object.assign(
+    {},
+    {
+      degree: degreeChar,
+      minute: minuteChar,
+      second: secondChar,
+      space: spacerChar,
+      precision: dmsPrecision,
+    }
+  )
+
 /**
  * @class CoordinateInput
  */
@@ -57,37 +75,21 @@ export default class CoordinateInput extends Component {
   constructor(props) {
     super(props)
 
-    const {
-      dmsPrecision,
-      degreeChar,
-      minuteChar,
-      secondChar,
-      spacerChar,
-      value,
-    } = props
-
-    const maskOpts = Object.assign(
-      {},
-      {
-        degree: degreeChar,
-        minute: minuteChar,
-        second: secondChar,
-        space: spacerChar,
-        precision: dmsPrecision,
-      }
-    )
+    const { dmsPrecision, value } = props
 
     this.state = {
+      mask: createMask(getMaskOptions(props)),
+      pipe: createLatLongPipe(dmsPrecision),
       value,
     }
-
-    this.pipe = createLatLongPipe(dmsPrecision)
-    this.mask = createMask(maskOpts)
   }
 
   static getDerivedStateFromProps(props) {
+    const mask = createMask(getMaskOptions(props))
+    const pipe = createLatLongPipe(props.dmsPrecision)
     const value = convertInput(props.value, props.dmsPrecision)
-    return { value }
+
+    return { mask, pipe, value }
   }
 
   handleBlur = () => {
@@ -136,7 +138,7 @@ export default class CoordinateInput extends Component {
   }
 
   render() {
-    const { value } = this.state
+    const { mask, pipe, value } = this.state
     const {
       className,
       guide,
@@ -154,11 +156,11 @@ export default class CoordinateInput extends Component {
         guide={guide}
         className={className}
         key={value}
-        mask={this.mask}
+        mask={mask}
         name={name}
         onBlur={this.handleBlur}
         onChange={this.handleChange}
-        pipe={this.pipe}
+        pipe={pipe}
         placeholder={placeholder}
         placeholderChar={placeholderChar}
         ref={this.setRef}
