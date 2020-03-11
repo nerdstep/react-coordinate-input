@@ -152,6 +152,7 @@ export default class CoordinateInput extends Component {
     return (
       <MaskedInput
         {...inputProps}
+        aria-label={name}
         dir="auto"
         guide={guide}
         className={className}
