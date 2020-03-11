@@ -6,7 +6,6 @@
 [![NPM](https://flat.badgen.net/npm/dt/react-coordinate-input)](https://www.npmjs.com/package/react-coordinate-input)
 [![gzip size](https://flat.badgen.net/bundlephobia/minzip/react-coordinate-input)](https://bundlephobia.com/result?p=react-coordinate-input)
 [![codecov](https://flat.badgen.net/codecov/c/github/nerdstep/react-coordinate-input)](https://codecov.io/gh/nerdstep/react-coordinate-input)
-[![Greenkeeper badge](https://flat.badgen.net/badge/Greenkeeper/enabled/green)](https://greenkeeper.io/)
 [![Build Status](https://flat.badgen.net/travis/nerdstep/react-coordinate-input)](https://travis-ci.org/nerdstep/react-coordinate-input)
 [![license](https://flat.badgen.net/github/license/nerdstep/react-coordinate-input)](./LICENSE)
 
@@ -75,6 +74,9 @@ See the [Text Mask](https://github.com/text-mask/text-mask/blob/master/component
 
   // Use this to pass additional props to the underlying input
   inputProps: undefined,
+
+  // Callback function which receives the input ref
+  inputRef: undefined
 
   // The placeholder character represents the fillable spot in the input mask
   placeholderChar: '_',
