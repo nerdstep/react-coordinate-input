@@ -33,7 +33,7 @@
     "deploy": "gh-pages -d example/build"
   },
   "dependencies": {
-    "react-text-mask": "^5.4.3"
+    "react-imask": "^6.0.3"
   },
   "peerDependencies": {
     "prop-types": "^15.5.4",
