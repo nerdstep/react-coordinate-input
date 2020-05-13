@@ -5,10 +5,10 @@
   "private": true,
   "homepage": "https://nerdstep.github.io/react-coordinate-input",
   "dependencies": {
-    "bulma": "^0.8.0",
+    "bulma": "^0.8.2",
     "prop-types": "^15.7.2",
     "react-coordinate-input": "link:..",
-    "react-scripts": "^3.4.0"
+    "react-scripts": "^3.4.1"
   },
   "scripts": {
     "start": "react-scripts start",
