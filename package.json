@@ -1,6 +1,6 @@
 {
   "name": "react-coordinate-input",
-  "version": "0.8.0",
+  "version": "1.0.0",
   "description": "A masked input React component for latitude & longitude coordinates.",
   "author": {
     "name": "Justin Williams",
@@ -12,14 +12,19 @@
   "module": "dist/index.es.js",
   "keywords": [
     "react",
+    "masked",
     "coordinate",
+    "location",
+    "input",
     "latitude",
     "longitude",
-    "masked",
-    "input",
+    "decimal",
+    "degrees",
     "dms",
-    "geo",
-    "location"
+    "geo"
+  ],
+  "files": [
+    "dist"
   ],
   "scripts": {
     "test": "cross-env CI=1 react-scripts test --env=jsdom",
@@ -33,15 +38,14 @@
     "deploy": "gh-pages -d example/build"
   },
   "dependencies": {
-    "react-imask": "^6.0.3"
+    "imask": "^6.0.3"
   },
   "peerDependencies": {
-    "prop-types": "^15.5.4",
+    "prop-types": "^15.0.0",
     "react": ">=16.9.0"
   },
   "devDependencies": {
     "@babel/core": "^7.9.6",
-    "@babel/plugin-proposal-class-properties": "^7.8.3",
     "@babel/preset-env": "^7.9.6",
     "@babel/preset-react": "^7.9.4",
     "@rollup/plugin-babel": "^5.0.0",
@@ -60,11 +64,14 @@
     "rollup-plugin-peer-deps-external": "^2.2.2",
     "rollup-plugin-postcss": "^3.1.1"
   },
-  "files": [
-    "dist"
-  ],
   "prettier": {
     "semi": false,
     "singleQuote": true
+  },
+  "babel": {
+    "presets": [
+      "@babel/preset-env",
+      "@babel/preset-react"
+    ]
   }
 }
