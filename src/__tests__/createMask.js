@@ -2,72 +2,14 @@ import createMask from '../createMask'
 
 describe('createMask', () => {
   it(`should equal`, () => {
-    expect(createMask()).toEqual([
-      /\d/,
-      /\d/,
-      '°',
-      ' ',
-      /\d/,
-      /\d/,
-      '′',
-      ' ',
-      /\d/,
-      /\d/,
-      '″',
-      ' ',
-      /[nNsS]/,
-      ' ',
-      /\d/,
-      /\d/,
-      /\d/,
-      '°',
-      ' ',
-      /\d/,
-      /\d/,
-      '′',
-      ' ',
-      /\d/,
-      /\d/,
-      '″',
-      ' ',
-      /[eEwW]/,
-    ])
+    expect(createMask()).toEqual(
+      'YDDCSPACERYMMCSPACERYSSCSPACERNSSPACERXDDCSPACERXMMCSPACERXSSCSPACEREW'
+    )
   })
 
   it(`should equal`, () => {
-    expect(createMask({ precision: 1 })).toEqual([
-      /\d/,
-      /\d/,
-      '°',
-      ' ',
-      /\d/,
-      /\d/,
-      '′',
-      ' ',
-      /\d/,
-      /\d/,
-      '.',
-      /\d/,
-      '″',
-      ' ',
-      /[nNsS]/,
-      ' ',
-      /\d/,
-      /\d/,
-      /\d/,
-      '°',
-      ' ',
-      /\d/,
-      /\d/,
-      '′',
-      ' ',
-      /\d/,
-      /\d/,
-      '.',
-      /\d/,
-      '″',
-      ' ',
-      /[eEwW]/,
-    ])
+    expect(createMask({ precision: 1 })).toEqual(
+      'YDDCSPACERYMMCSPACERYSDOTASSCSPACERNSSPACERXDDCSPACERXMMCSPACERXSDOTASSCSPACEREW'
+    )
   })
 })

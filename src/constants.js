@@ -1,0 +1,8 @@
+export const DEGREE_CHAR = '°'
+export const MINUTE_CHAR = '′'
+export const SECOND_CHAR = '″'
+export const SPACER_CHAR = ' '
+export const PLACEHOLDER_CHAR = '_'
+export const DIGIT = '0'
+export const DOT = '.'
+export const SEPARATOR = ':'

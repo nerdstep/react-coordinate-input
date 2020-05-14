@@ -1,4 +1,5 @@
 // @ts-check
+import { SEPARATOR } from './constants'
 import { RE_DD, RE_DMS } from './regex'
 
 /**
@@ -27,7 +28,7 @@ export function fill(arr, value, count) {
  * @param {string} sep Value separator
  * @returns {string} Normalized value
  */
-export function normalizeInput(value = '', sep = ':') {
+export function normalizeInput(value = '', sep = SEPARATOR) {
   return value.replace(/[^0-9\.NSEW]/gi, sep).replace(/:{2,}/g, sep)
 }
 
@@ -47,7 +48,7 @@ export function convertInput(value, precision) {
     const lon = parseFloat(dd[1])
     const latArr = decimalToDMS(lat, false, precision)
     const lonArr = decimalToDMS(lon, true, precision)
-    value = serializeDMS(latArr, lonArr)
+    value = serializeDMS(latArr, lonArr, '')
   }
   return value
 }
@@ -83,11 +84,11 @@ export function validateDMS(value) {
  * @param {string} sep Separator
  * @returns {((string|number)[])[]} [[D, M, S, 'N|S'], [D, M, S, 'E|W']]
  */
-export function parseDMS(value, sep = ':') {
+export function parseDMS(value, sep = SEPARATOR) {
   const match = value.match(RE_DMS).slice(1)
 
-  const lat = match[0].split(sep).map(n => parseFloat(n))
-  const lon = match[2].split(sep).map(n => parseFloat(n))
+  const lat = match[0].split(sep).map((n) => parseFloat(n))
+  const lon = match[2].split(sep).map((n) => parseFloat(n))
 
   return [
     [lat[0], lat[1], lat[2], match[1]],
@@ -106,11 +107,11 @@ export function parseDMS(value, sep = ':') {
  * @returns {string}
  * @example `04:08:15:N:162:03:42:E`
  */
-export function serializeDMS(lat, lon, sep = ':') {
+export function serializeDMS(lat, lon, sep = SEPARATOR) {
   const res = []
 
   res[0] = lat
-    .map(item => item.toString().replace(/^(\d)(\.\d+)?$/, '0$1$2'))
+    .map((item) => item.toString().replace(/^(\d)(\.\d+)?$/, '0$1$2'))
     .join(sep)
 
   res[1] = lon

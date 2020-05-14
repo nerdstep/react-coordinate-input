@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useRef, useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import CoordinateInput from 'react-coordinate-input'
 import Footer from './Footer'
 
@@ -10,16 +10,24 @@ function fill(arr, value, count) {
 }
 
 const initialState = {
+  value: '',
+  unmaskedValue: '',
   dd: [],
-  dms: '',
-  dmsArray: [],
+  dms: [],
 }
+
+const selectOptions = [
+  '90, -180',
+  '-90, 180',
+  '42.363, 27.891',
+  '42 27 00 N 067 06 00 W',
+]
 
 const App = () => {
   const [ddPrecision, setDDPrecision] = useState(6)
   const [dmsPrecision, setDMSPrecision] = useState(0)
+  const [selected, setSelected] = useState('')
   const [state, setState] = useState(initialState)
-  const [value, setValue] = useState('')
   const inputRef = useRef()
 
   const placeholder = useMemo(() => {
@@ -34,20 +42,19 @@ const App = () => {
 
   const handleReset = useCallback(() => {
     setState(initialState)
-    setValue('')
+    setSelected('')
   }, [])
 
-  const handleChange = useCallback((e, { dd, dms, dmsArray }) => {
-    setState({ dd, dms, dmsArray })
-    setValue(dd.join(','))
+  const handleChange = useCallback((value, props) => {
+    setState({ value, ...props })
   }, [])
 
-  const handleBlur = useCallback(e => {
-    //console.log('handleBlur', e)
+  const handleBlur = useCallback((e) => {
+    console.log('handleBlur', e)
   }, [])
 
   const handleChangeDDPrecision = useCallback(
-    e => {
+    (e) => {
       handleReset()
       let value = parseInt(e.target.value, 10) || 0
       value = value < 0 ? 0 : value > 8 ? 8 : value
@@ -57,7 +64,7 @@ const App = () => {
   )
 
   const handleChangeDMSPrecision = useCallback(
-    e => {
+    (e) => {
       handleReset()
       let value = parseInt(e.target.value, 10) || 0
       value = value < 0 ? 0 : value > 6 ? 6 : value
@@ -66,15 +73,26 @@ const App = () => {
     [handleReset]
   )
 
-  const handleSelectChange = useCallback(e => {
-    setValue(e.target.value)
+  const handleSelectChange = useCallback(({ target: { value } }) => {
+    setSelected(value)
+    setState({ value })
   }, [])
+
+  useEffect(() => {
+    //console.log(inputRef.current)
+  }, [])
+
+  const output = {
+    ...state,
+    dms: JSON.stringify(state.dms),
+    dd: JSON.stringify(state.dd),
+  }
 
   return (
     <section className="hero is-fullheight has-background-light">
       <div className="hero-body">
         <div className="container">
-          <div className="column is-6 is-offset-3">
+          <div className="column is-8 is-offset-2">
             <h3 className="title has-text-grey has-text-centered">
               React Coordinate Input
             </h3>
@@ -87,29 +105,34 @@ const App = () => {
                     ddPrecision={ddPrecision}
                     dmsPrecision={dmsPrecision}
                     inputProps={{ id: 'react-coord-input' }}
-                    inputRef={c => (inputRef.current = c)}
+                    inputRef={(c) => (inputRef.current = c)}
+                    name="coordinate-input"
                     onBlur={handleBlur}
                     onChange={handleChange}
                     placeholder={placeholder}
-                    value={value}
+                    placeholderChar="_"
+                    value={state.value}
                   />
                 </div>
               </div>
               <div className="field is-grouped">
                 <div className="control">
                   <div className="select">
-                    <select onChange={handleSelectChange} value={value}>
+                    <select
+                      disabled={dmsPrecision > 0}
+                      onChange={handleSelectChange}
+                      value={selected}
+                    >
                       <option value="">Set value...</option>
-                      <option>90, -180</option>
-                      <option>-90, 180</option>
-                      <option>42.363, 27.891</option>
-                      <option>422700N 0670600W</option>
+                      {selectOptions.map((el) => (
+                        <option>{el}</option>
+                      ))}
                     </select>
                   </div>
                 </div>
                 <div className="control">
                   <button className="button" onClick={handleReset}>
-                    Clear
+                    Reset
                   </button>
                 </div>
               </div>
@@ -141,9 +164,9 @@ const App = () => {
                 </div>
               </div>
               <div className="field">
-                <label className="label">Output</label>
+                <label className="label">State</label>
                 <div className="control">
-                  <pre>{JSON.stringify(state, null, 2)}</pre>
+                  <pre>{JSON.stringify(output, null, 2)}</pre>
                 </div>
               </div>
             </div>
