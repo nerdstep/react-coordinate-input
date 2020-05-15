@@ -47,7 +47,14 @@ export const useCoordMask = ({
         placeholderChar,
         dmsPrecision,
       }),
-    [degreeChar, minuteChar, secondChar, spacerChar, dmsPrecision]
+    [
+      degreeChar,
+      minuteChar,
+      secondChar,
+      spacerChar,
+      placeholderChar,
+      dmsPrecision,
+    ]
   )
 
   const handleChange = useCallback(
@@ -109,11 +116,11 @@ export const useCoordMask = ({
         handleChange(maskedValue, mask.unmaskedValue)
       }
     }
-  }, [controlledValue, dmsPrecision, inputRef.current, mask])
+  }, [controlledValue, dmsPrecision, handleChange, initMask, inputRef, mask])
 
   useEffect(() => {
     if (!maskRef.current) {
       initMask(inputRef.current, mask)
     }
-  }, [controlledValue, inputRef.current, mask])
+  }, [controlledValue, initMask, inputRef, mask])
 }

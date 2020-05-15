@@ -29,7 +29,7 @@ export function fill(arr, value, count) {
  * @returns {string} Normalized value
  */
 export function normalizeInput(value = '', sep = SEPARATOR) {
-  return value.replace(/[^0-9\.NSEW]/gi, sep).replace(/:{2,}/g, sep)
+  return value.replace(/[^0-9.NSEW]/gi, sep).replace(/:{2,}/g, sep)
 }
 
 /**

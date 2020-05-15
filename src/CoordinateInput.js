@@ -51,7 +51,7 @@ const CoordinateInput = ({
     if (typeof inputRef === 'function') {
       inputRef(innerRef.current)
     }
-  }, [innerRef.current])
+  }, [innerRef, inputRef])
 
   return (
     <input

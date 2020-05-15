@@ -58,11 +58,11 @@ testsValues.forEach(
       const event = { target: { value } }
       const onChange = jest.fn((e, value) => value)
 
-      const { debug, getByLabelText } = render(
+      const { /* debug, */ getByLabelText } = render(
         <CoordinateInput {...props} name={inputName} onChange={onChange} />
       )
 
-      //debug()
+      // debug()
 
       const input = getByLabelText(inputName)
 

@@ -34,7 +34,7 @@ const minSecValidate = (isLon, precision) => (
 
   //console.log('validate', degrees, seconds, parent, _blocks)
 
-  return degrees === max && seconds > 0 ? false : true
+  return !(degrees === max && seconds > 0)
 }
 
 const getDegreeMask = (isLon) => ({
@@ -131,7 +131,7 @@ export const createMask = ({
     overwrite: true,
     // If placeholderChar is defined then set lazy to false,
     // which will display the placeholder character.
-    lazy: placeholderChar ? false : true,
+    lazy: placeholderChar === null,
     blocks: {
       DC: { mask: degreeChar },
       MC: { mask: minuteChar },
