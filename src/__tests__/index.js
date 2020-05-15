@@ -2,6 +2,7 @@ import '@testing-library/jest-dom'
 import { fireEvent, render } from '@testing-library/react'
 import React from 'react'
 import ReactDOM from 'react-dom'
+import { isDOMComponent } from 'react-dom/test-utils'
 import CoordinateInput from '../'
 
 const testsValues = [
@@ -77,6 +78,17 @@ testsValues.forEach(({ testName, inputName, value, props = {}, result }) => {
     expect(input).toHaveValue(value)
     expect(onChange).toHaveReturnedWith(result)
     expect(onChange).toHaveBeenCalledTimes(1)
+  })
+})
+
+describe('inputRef', () => {
+  it('should callback with a ref to the input', () => {
+    const inputRef = jest.fn((ref) => {
+      expect(isDOMComponent(ref)).toBe(true)
+    })
+
+    render(<CoordinateInput inputRef={inputRef} onChange={() => {}} />)
+    expect(inputRef).toHaveBeenCalledTimes(1)
   })
 })
 
