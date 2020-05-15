@@ -4,7 +4,6 @@ import resolve from '@rollup/plugin-node-resolve'
 import url from '@rollup/plugin-url'
 import filesize from 'rollup-plugin-filesize'
 import external from 'rollup-plugin-peer-deps-external'
-import postcss from 'rollup-plugin-postcss'
 import pkg from './package.json'
 
 export default {
@@ -21,15 +20,11 @@ export default {
     {
       file: pkg.module,
       format: 'es',
-      sourcemap: true,
     },
   ],
   external: ['react', 'prop-types'],
   plugins: [
     external(),
-    postcss({
-      modules: true,
-    }),
     url(),
     babel({
       exclude: 'node_modules/**',
