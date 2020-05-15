@@ -1,5 +1,4 @@
 // @ts-check
-//import 'imask/esm/imask'
 import MaskedEnum from 'imask/esm/masked/enum'
 import MaskedPattern from 'imask/esm/masked/pattern'
 import MaskedRange from 'imask/esm/masked/range'
