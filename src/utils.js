@@ -1,4 +1,5 @@
 // @ts-check
+import { SEPARATOR } from './constants'
 import { RE_DD, RE_DMS } from './regex'
 
 /**
@@ -27,8 +28,8 @@ export function fill(arr, value, count) {
  * @param {string} sep Value separator
  * @returns {string} Normalized value
  */
-export function normalizeInput(value = '', sep = ':') {
-  return value.replace(/[^0-9\.NSEW]/gi, sep).replace(/:{2,}/g, sep)
+export function normalizeInput(value = '', sep = SEPARATOR) {
+  return value.replace(/[^0-9.NSEW]/gi, sep).replace(/:{2,}/g, sep)
 }
 
 /**
@@ -40,14 +41,14 @@ export function normalizeInput(value = '', sep = ':') {
  * @param {number} precision DMS decimal places
  * @returns {string} Normalized DMS string
  */
-export function convertInput(value, precision) {
+export function convertInput(value = '', precision, sep = SEPARATOR) {
   if (validateDD(value)) {
     const dd = value.split(',')
     const lat = parseFloat(dd[0])
     const lon = parseFloat(dd[1])
     const latArr = decimalToDMS(lat, false, precision)
     const lonArr = decimalToDMS(lon, true, precision)
-    value = serializeDMS(latArr, lonArr)
+    value = serializeDMS(latArr, lonArr, sep)
   }
   return value
 }
@@ -83,11 +84,11 @@ export function validateDMS(value) {
  * @param {string} sep Separator
  * @returns {((string|number)[])[]} [[D, M, S, 'N|S'], [D, M, S, 'E|W']]
  */
-export function parseDMS(value, sep = ':') {
+export function parseDMS(value, sep = SEPARATOR) {
   const match = value.match(RE_DMS).slice(1)
 
-  const lat = match[0].split(sep).map(n => parseFloat(n))
-  const lon = match[2].split(sep).map(n => parseFloat(n))
+  const lat = match[0].split(sep).map((n) => parseFloat(n))
+  const lon = match[2].split(sep).map((n) => parseFloat(n))
 
   return [
     [lat[0], lat[1], lat[2], match[1]],
@@ -106,11 +107,11 @@ export function parseDMS(value, sep = ':') {
  * @returns {string}
  * @example `04:08:15:N:162:03:42:E`
  */
-export function serializeDMS(lat, lon, sep = ':') {
+export function serializeDMS(lat, lon, sep = SEPARATOR) {
   const res = []
 
   res[0] = lat
-    .map(item => item.toString().replace(/^(\d)(\.\d+)?$/, '0$1$2'))
+    .map((item) => item.toString().replace(/^(\d)(\.\d+)?$/, '0$1$2'))
     .join(sep)
 
   res[1] = lon
@@ -139,8 +140,8 @@ export function serializeDMS(lat, lon, sep = ':') {
  * @param {number} minutes
  * @param {number} seconds
  * @param {string} direction Compass direction, e.g. N|S|E|W
- * @param {number} precision  Decimal places
- * @returns {number} Decimal degrees
+ * @param {number} [precision]  Decimal places (default: 6)
+ * @returns {number} Decimal degrees, e.g. 42.451
  */
 export function dmsToDecimal(
   degrees,
@@ -164,7 +165,7 @@ export function dmsToDecimal(
  *
  * @param {number} dd Decimal degree value
  * @param {boolean} isLon Is longitude?
- * @param {number} precision Decimal places for seconds
+ * @param {number} [precision] Decimal places for seconds (default: 0)
  * @returns {(string|number)[]} DMS values, e.g. [D, M, S, 'N|S|E|W']
  */
 export function decimalToDMS(dd, isLon, precision = 0) {

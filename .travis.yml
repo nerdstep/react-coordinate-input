@@ -5,9 +5,10 @@ branches:
 cache: 
   yarn: true
 node_js:
-  - 10
+  - 12
 sudo: false
 script:
-  - npm test && npm run build
+  - yarn run test:ci && yarn run build
 after_success:
-  - npm run deploy
+  - yarn run coveralls
+  - yarn run deploy

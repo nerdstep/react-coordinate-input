@@ -1,10 +1,96 @@
-import { configure, shallow } from 'enzyme'
-import Adapter from 'enzyme-adapter-react-16'
+import '@testing-library/jest-dom'
+import { fireEvent, render } from '@testing-library/react'
 import React from 'react'
 import ReactDOM from 'react-dom'
+import { isDOMComponent } from 'react-dom/test-utils'
 import CoordinateInput from '../'
 
-configure({ adapter: new Adapter() })
+const testsValues = [
+  {
+    testName: 'should call the onChange handler with empty results',
+    inputName: 'testInput',
+    value: ' ',
+    result: {
+      value: '',
+      unmaskedValue: '',
+      dd: [],
+      dms: [],
+    },
+  },
+  {
+    testName: 'should have dmsPrecision 3',
+    inputName: 'testInput',
+    value: '90 00 00.000 N 180 00 00.000 E',
+    props: {
+      dmsPrecision: 3,
+    },
+    result: {
+      value: '90° 00′ 00.000″ N 180° 00′ 00.000″ E',
+      unmaskedValue: '900000000N1800000000E',
+      dd: [90, 180],
+      dms: [
+        [90, 0, 0, 'N'],
+        [180, 0, 0, 'E'],
+      ],
+    },
+  },
+  {
+    testName: 'should have ddPrecision 8',
+    inputName: 'testInput',
+    value: '30 09 08 N 038 09 07 E',
+    props: {
+      ddPrecision: 8,
+    },
+    result: {
+      value: '30° 09′ 08″ N 038° 09′ 07″ E',
+      unmaskedValue: '300908N0380907E',
+      dd: [30.15222222, 38.15194444],
+      dms: [
+        [30, 9, 8, 'N'],
+        [38, 9, 7, 'E'],
+      ],
+    },
+  },
+]
+
+testsValues.forEach(({ testName, inputName, value, props = {}, result }) => {
+  it(`${testName}`, () => {
+    const event = { target: { value } }
+    const onChange = jest.fn((value, obj) => ({ value, ...obj }))
+
+    const { /* debug, */ getByLabelText } = render(
+      <CoordinateInput
+        {...props}
+        name={inputName}
+        onChange={onChange}
+        value={value}
+      />
+    )
+
+    // debug()
+
+    const input = getByLabelText(inputName)
+
+    fireEvent.change(input, event)
+
+    expect(input).toBeInTheDocument()
+    expect(input).toHaveAttribute('name', inputName)
+    expect(input).toHaveValue(value)
+    expect(onChange).toHaveReturnedWith(result)
+    expect(onChange).toHaveBeenCalledTimes(1)
+  })
+})
+
+describe('inputRef', () => {
+  it('should callback with a ref to the input', () => {
+    const inputRef = jest.fn((ref) => {
+      expect(isDOMComponent(ref)).toBe(true)
+    })
+
+    render(<CoordinateInput inputRef={inputRef} onChange={() => {}} />)
+    expect(inputRef).toHaveBeenCalledTimes(1)
+  })
+})
 
 describe('CoordinateInput', () => {
   it('is truthy', () => {
@@ -12,62 +98,9 @@ describe('CoordinateInput', () => {
   })
 
   it('renders without crashing', () => {
-    ReactDOM.render(<CoordinateInput />, document.createElement('div'))
-  })
-
-  it('should match the snapshot', () => {
-    expect(shallow(<CoordinateInput />)).toMatchSnapshot()
-    expect(shallow(<CoordinateInput dmsPrecision={3} />)).toMatchSnapshot()
-    expect(
-      shallow(
-        <CoordinateInput
-          degreeChar="D"
-          minuteChar="M"
-          secondChar="S"
-          spacerChar="-"
-        />
-      )
-    ).toMatchSnapshot()
-  })
-
-  it('should call the onChange handler with the converted results', () => {
-    const value = '90 00 00.000 N 180 00 00.000 E'
-    const arg1 = { target: { value } }
-    const arg2 = {
-      dd: [90, 180],
-      dms: '90:00:00.000:N:180:00:00.000:E',
-      dmsArray: [[90, 0, 0, 'N'], [180, 0, 0, 'E']],
-    }
-    const onChange = jest.fn()
-    const wrapper = shallow(
-      <CoordinateInput dmsPrecision={3} onChange={onChange} />
+    ReactDOM.render(
+      <CoordinateInput onChange={() => {}} />,
+      document.createElement('div')
     )
-
-    expect(wrapper).toMatchSnapshot()
-
-    wrapper.simulate('change', {
-      target: { value },
-    })
-
-    expect(onChange).toBeCalledWith(arg1, arg2)
-  })
-
-  it('should call the onChange handler with empty results', () => {
-    const arg1 = { target: { value: '' } }
-    const arg2 = {
-      dd: [],
-      dms: '',
-      dmsArray: [],
-    }
-    const onChange = jest.fn()
-    const wrapper = shallow(<CoordinateInput onChange={onChange} />)
-
-    expect(wrapper).toMatchSnapshot()
-
-    wrapper.simulate('change', {
-      target: { value: '' },
-    })
-
-    expect(onChange).toBeCalledWith(arg1, arg2)
   })
 })
