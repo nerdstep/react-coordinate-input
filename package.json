@@ -1,6 +1,6 @@
 {
   "name": "react-coordinate-input",
-  "version": "1.0.0",
+  "version": "1.0.0-beta",
   "description": "A masked input React component for latitude & longitude coordinates.",
   "author": {
     "name": "Justin Williams",
