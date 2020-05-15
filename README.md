@@ -63,7 +63,7 @@ Component props and their default values.
   // Use this to pass additional props to the underlying input
   inputProps: undefined,
   // Callback function which receives the input ref
-  inputRef: undefined
+  inputRef: undefined,
   // DMS characters used in the input mask
   degreeChar: '°',
   minuteChar: '′',
@@ -110,6 +110,45 @@ The only requirement is that each value has the required number of characters, i
 2. Decimal degree string can also be used, e.g. `4.1375, 162.061667`
 
 The component will detect the DD value and convert it to a DMS value automatically.
+
+## Exports
+
+In addition to the default `CoordinateInput` export, the following helper utilities are also exported for convenience:
+
+**dmsToDecimal**
+
+```js
+/**
+ * dmsToDecimal
+ *
+ * Converts Degrees Minutes Seconds to Decimal Degrees
+ *
+ * Formula:
+ * DD = D + M / 60 + S / 3600
+ *
+ * @param {number} degrees
+ * @param {number} minutes
+ * @param {number} seconds
+ * @param {string} direction Compass direction, e.g. N|S|E|W
+ * @param {number} [precision]  Decimal places (default: 6)
+ * @returns {number} Decimal degrees, e.g. 42.451
+ */
+```
+
+**decimalToDMS**
+
+```js
+/**
+ * decimalToDMS
+ *
+ * Converts Decimal Degress to Degrees Minutes Seconds
+ *
+ * @param {number} dd Decimal degree value
+ * @param {boolean} isLon Is longitude?
+ * @param {number} [precision] Decimal places for seconds (default: 0)
+ * @returns {(string|number)[]} DMS values, e.g. [D, M, S, 'N|S|E|W']
+ */
+```
 
 ## License
 
