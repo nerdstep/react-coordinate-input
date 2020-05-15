@@ -41,7 +41,7 @@ export function normalizeInput(value = '', sep = SEPARATOR) {
  * @param {number} precision DMS decimal places
  * @returns {string} Normalized DMS string
  */
-export function convertInput(value, precision, sep = SEPARATOR) {
+export function convertInput(value = '', precision, sep = SEPARATOR) {
   if (validateDD(value)) {
     const dd = value.split(',')
     const lat = parseFloat(dd[0])
