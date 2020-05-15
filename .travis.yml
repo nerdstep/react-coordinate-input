@@ -8,6 +8,7 @@ node_js:
   - 12
 sudo: false
 script:
-  - npm run test:ci && npm run build
+  - yarn run test:ci && yarn run build
 after_success:
-  - npm run deploy
+  - yarn run coveralls
+  - yarn run deploy

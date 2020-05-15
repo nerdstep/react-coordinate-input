@@ -5,7 +5,7 @@
 [![NPM](https://flat.badgen.net/npm/v/react-coordinate-input)](https://www.npmjs.com/package/react-coordinate-input)
 [![NPM](https://flat.badgen.net/npm/dt/react-coordinate-input)](https://www.npmjs.com/package/react-coordinate-input)
 [![gzip size](https://flat.badgen.net/bundlephobia/minzip/react-coordinate-input)](https://bundlephobia.com/result?p=react-coordinate-input)
-[![codecov](https://flat.badgen.net/codecov/c/github/nerdstep/react-coordinate-input)](https://codecov.io/gh/nerdstep/react-coordinate-input)
+[![code coverage](https://flat.badgen.net/coveralls/c/github/nerdstep/react-coordinate-input)](https://coveralls.io/github/nerdstep/react-coordinate-input)
 [![Build Status](https://flat.badgen.net/travis/nerdstep/react-coordinate-input)](https://travis-ci.org/nerdstep/react-coordinate-input)
 [![license](https://flat.badgen.net/github/license/nerdstep/react-coordinate-input)](./LICENSE)
 

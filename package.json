@@ -29,14 +29,15 @@
   "scripts": {
     "lint": "eslint src",
     "test": "jest --env=jsdom",
-    "test:ci": "cross-env CI=1 jest --no-cache",
+    "test:ci": "cross-env CI=1 jest --no-cache --coverage",
     "test:watch": "yarn test --watch",
     "test:cover": "yarn test --coverage",
     "build": "rollup -c",
     "start": "rollup -c -w",
     "prepare": "yarn run build",
     "predeploy": "cd example && yarn install && yarn run build",
-    "deploy": "gh-pages -d example/build"
+    "deploy": "gh-pages -d example/build",
+    "coveralls": "npx minicat coverage/lcov.info | coveralls"
   },
   "dependencies": {
     "imask": "^6.0.3"
@@ -56,6 +57,7 @@
     "@testing-library/jest-dom": "^5.7.0",
     "@testing-library/react": "^10.0.4",
     "babel-eslint": "^10.1.0",
+    "coveralls": "^3.1.0",
     "cross-env": "^7.0.2",
     "eslint": "^7.0.0",
     "eslint-config-prettier": "^6.11.0",
