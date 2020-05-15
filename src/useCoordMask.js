@@ -98,7 +98,7 @@ export const useCoordMask = ({
 
   useEffect(() => {
     if (inputRef.current && inputRef.current.value !== controlledValue) {
-      const dmsValue = convertInput(controlledValue, dmsPrecision)
+      const dmsValue = convertInput(controlledValue, dmsPrecision, '')
       const maskedValue = mask.resolve(dmsValue)
 
       //console.log({ controlledValue, dmsValue, maskedValue, mask })

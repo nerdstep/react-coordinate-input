@@ -41,14 +41,14 @@ export function normalizeInput(value = '', sep = SEPARATOR) {
  * @param {number} precision DMS decimal places
  * @returns {string} Normalized DMS string
  */
-export function convertInput(value, precision) {
+export function convertInput(value, precision, sep = SEPARATOR) {
   if (validateDD(value)) {
     const dd = value.split(',')
     const lat = parseFloat(dd[0])
     const lon = parseFloat(dd[1])
     const latArr = decimalToDMS(lat, false, precision)
     const lonArr = decimalToDMS(lon, true, precision)
-    value = serializeDMS(latArr, lonArr, '')
+    value = serializeDMS(latArr, lonArr, sep)
   }
   return value
 }
@@ -140,8 +140,8 @@ export function serializeDMS(lat, lon, sep = SEPARATOR) {
  * @param {number} minutes
  * @param {number} seconds
  * @param {string} direction Compass direction, e.g. N|S|E|W
- * @param {number} precision  Decimal places
- * @returns {number} Decimal degrees
+ * @param {number} [precision]  Decimal places (default: 6)
+ * @returns {number} Decimal degrees, e.g. 42.451
  */
 export function dmsToDecimal(
   degrees,
@@ -165,7 +165,7 @@ export function dmsToDecimal(
  *
  * @param {number} dd Decimal degree value
  * @param {boolean} isLon Is longitude?
- * @param {number} precision Decimal places for seconds
+ * @param {number} [precision] Decimal places for seconds (default: 0)
  * @returns {(string|number)[]} DMS values, e.g. [D, M, S, 'N|S|E|W']
  */
 export function decimalToDMS(dd, isLon, precision = 0) {
