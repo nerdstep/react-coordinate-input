@@ -1,73 +1,18 @@
-import createMask from '../createMask'
+import { createMask } from '../createMask'
+
+const p0 =
+  'YDDCSPACERYMMCSPACERYSSCSPACERNSSPACERXDDCSPACERXMMCSPACERXSSCSPACEREW'
+const p1 =
+  'YDDCSPACERYMMCSPACERYSDOTASSCSPACERNSSPACERXDDCSPACERXMMCSPACERXSDOTASSCSPACEREW'
 
 describe('createMask', () => {
-  it(`should equal`, () => {
-    expect(createMask()).toEqual([
-      /\d/,
-      /\d/,
-      '°',
-      ' ',
-      /\d/,
-      /\d/,
-      '′',
-      ' ',
-      /\d/,
-      /\d/,
-      '″',
-      ' ',
-      /[nNsS]/,
-      ' ',
-      /\d/,
-      /\d/,
-      /\d/,
-      '°',
-      ' ',
-      /\d/,
-      /\d/,
-      '′',
-      ' ',
-      /\d/,
-      /\d/,
-      '″',
-      ' ',
-      /[eEwW]/,
-    ])
+  it('mask should not have a precision', () => {
+    expect(createMask().mask).toEqual(p0)
+    expect(createMask({ dmsPrecision: -1 }).mask).toEqual(p0)
   })
 
-  it(`should equal`, () => {
-    expect(createMask({ precision: 1 })).toEqual([
-      /\d/,
-      /\d/,
-      '°',
-      ' ',
-      /\d/,
-      /\d/,
-      '′',
-      ' ',
-      /\d/,
-      /\d/,
-      '.',
-      /\d/,
-      '″',
-      ' ',
-      /[nNsS]/,
-      ' ',
-      /\d/,
-      /\d/,
-      /\d/,
-      '°',
-      ' ',
-      /\d/,
-      /\d/,
-      '′',
-      ' ',
-      /\d/,
-      /\d/,
-      '.',
-      /\d/,
-      '″',
-      ' ',
-      /[eEwW]/,
-    ])
+  it('mask should have a precision', () => {
+    expect(createMask({ dmsPrecision: 1 }).mask).toEqual(p1)
+    expect(createMask({ dmsPrecision: 7 }).mask).toEqual(p1)
   })
 })

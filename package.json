@@ -1,6 +1,6 @@
 {
   "name": "react-coordinate-input",
-  "version": "0.8.0",
+  "version": "1.0.0-beta",
   "description": "A masked input React component for latitude & longitude coordinates.",
   "author": {
     "name": "Justin Williams",
@@ -12,20 +12,26 @@
   "module": "dist/index.es.js",
   "keywords": [
     "react",
+    "masked",
     "coordinate",
+    "location",
+    "input",
     "latitude",
     "longitude",
-    "masked",
-    "input",
+    "decimal",
+    "degrees",
     "dms",
-    "geo",
-    "location"
+    "geo"
+  ],
+  "files": [
+    "dist"
   ],
   "scripts": {
-    "test": "cross-env CI=1 react-scripts test --env=jsdom",
-    "test:watch": "react-scripts test --env=jsdom",
+    "lint": "eslint src",
+    "test": "jest --env=jsdom",
+    "test:ci": "cross-env CI=1 jest --no-cache",
+    "test:watch": "yarn test --watch",
     "test:cover": "yarn test --coverage",
-    "test:snapshot": "yarn test --updateSnapshot",
     "build": "rollup -c",
     "start": "rollup -c -w",
     "prepare": "yarn run build",
@@ -33,45 +39,53 @@
     "deploy": "gh-pages -d example/build"
   },
   "dependencies": {
-    "react-text-mask": "^5.4.3"
+    "imask": "^6.0.3"
   },
   "peerDependencies": {
-    "prop-types": "^15.5.4",
-    "react": "^16.0.0"
+    "prop-types": "^15.0.0",
+    "react": ">=16.9.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.5.5",
-    "@babel/plugin-proposal-class-properties": "^7.5.5",
-    "@babel/preset-env": "^7.5.5",
-    "@babel/preset-react": "^7.0.0",
-    "cross-env": "^5.2.1",
-    "enzyme": "^3.10.0",
-    "enzyme-adapter-react-16": "^1.14.0",
-    "enzyme-to-json": "^3.4.0",
-    "gh-pages": "^2.1.1",
-    "react": "^16.9.0",
-    "react-dom": "^16.9.0",
-    "react-scripts": "^3.1.1",
-    "rollup": "^1.20.3",
-    "rollup-plugin-babel": "^4.3.3",
-    "rollup-plugin-commonjs": "^10.1.0",
-    "rollup-plugin-filesize": "^6.2.0",
-    "rollup-plugin-node-resolve": "^5.2.0",
-    "rollup-plugin-peer-deps-external": "^2.2.0",
-    "rollup-plugin-postcss": "^2.0.3",
-    "rollup-plugin-url": "^2.2.2"
+    "@babel/core": "^7.9.6",
+    "@babel/preset-env": "^7.9.6",
+    "@babel/preset-react": "^7.9.4",
+    "@rollup/plugin-babel": "^5.0.0",
+    "@rollup/plugin-commonjs": "^11.1.0",
+    "@rollup/plugin-node-resolve": "^7.1.3",
+    "@rollup/plugin-url": "^5.0.0",
+    "@testing-library/jest-dom": "^5.7.0",
+    "@testing-library/react": "^10.0.4",
+    "babel-eslint": "^10.1.0",
+    "cross-env": "^7.0.2",
+    "eslint": "^7.0.0",
+    "eslint-config-prettier": "^6.11.0",
+    "eslint-config-standard": "^14.1.1",
+    "eslint-config-standard-react": "^9.2.0",
+    "eslint-plugin-import": "^2.20.2",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-react": "^7.20.0",
+    "eslint-plugin-react-hooks": "^4.0.2",
+    "eslint-plugin-standard": "^4.0.1",
+    "gh-pages": "^2.2.0",
+    "jest": "^26.0.1",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "rollup": "^2.10.0",
+    "rollup-plugin-filesize": "^9.0.0",
+    "rollup-plugin-peer-deps-external": "^2.2.2"
   },
-  "files": [
-    "dist"
-  ],
   "prettier": {
     "semi": false,
-    "singleQuote": true,
-    "trailingComma": "es5"
+    "singleQuote": true
   },
   "jest": {
-    "snapshotSerializers": [
-      "enzyme-to-json/serializer"
+    "moduleDirectories": [
+      "node_modules",
+      "src"
+    ],
+    "transformIgnorePatterns": [
+      "/node_modules/(?!imask)"
     ]
   }
 }

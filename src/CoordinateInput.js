@@ -1,173 +1,88 @@
 // @ts-check
-// https://github.com/text-mask/text-mask/issues/887
-// https://github.com/text-mask/text-mask/issues/806
-// https://github.com/text-mask/text-mask/pull/807
-import PropTypes from 'prop-types'
-import React, { Component } from 'react'
-import MaskedInput from 'react-text-mask'
-import createLatLongPipe from './createLatLongPipe'
-import createMask from './createMask'
-import {
-  convertInput,
-  dmsToDecimal,
-  normalizeInput,
-  parseDMS,
-  validateDMS,
-} from './utils'
 
-const getMaskOptions = ({
-  dmsPrecision,
+import PropTypes from 'prop-types'
+import React, { useEffect, useRef } from 'react'
+import { useCoordMask } from './useCoordMask'
+
+/**
+ * CoordinateInput
+ */
+const CoordinateInput = ({
+  className,
   degreeChar,
   minuteChar,
   secondChar,
   spacerChar,
-}) =>
-  Object.assign(
-    {},
-    {
-      degree: degreeChar,
-      minute: minuteChar,
-      second: secondChar,
-      space: spacerChar,
-      precision: dmsPrecision,
+  placeholderChar,
+  ddPrecision,
+  dmsPrecision,
+  inputProps,
+  inputRef,
+  name,
+  placeholder = '04° 08′ 15″ N 162° 03′ 42″ E',
+  onBlur,
+  onChange,
+  value: controlledValue,
+}) => {
+  const innerRef = useRef(null)
+
+  useCoordMask({
+    inputRef: innerRef,
+    controlledValue,
+    degreeChar,
+    minuteChar,
+    secondChar,
+    spacerChar,
+    placeholderChar,
+    ddPrecision,
+    dmsPrecision,
+    onChange,
+  })
+
+  /*const handleBlur = useCallback(
+    (e) => {
+      if (mask.isComplete) handleChange(mask.unmaskedValue, mask)
+      if (typeof onBlur === 'function') onBlur(e)
+    },
+    [mask, onBlur]
+  )*/
+
+  useEffect(() => {
+    if (typeof inputRef === 'function') {
+      inputRef(innerRef.current)
     }
+  }, [innerRef, inputRef])
+
+  return (
+    <input
+      {...inputProps}
+      aria-label={name}
+      dir="auto"
+      className={className}
+      name={name}
+      placeholder={placeholder}
+      ref={innerRef}
+      type="text"
+    />
   )
-
-/**
- * @class CoordinateInput
- */
-export default class CoordinateInput extends Component {
-  static propTypes = {
-    className: PropTypes.string,
-    degreeChar: PropTypes.string,
-    ddPrecision: PropTypes.number,
-    dmsPrecision: PropTypes.number,
-    guide: PropTypes.bool,
-    minuteChar: PropTypes.string,
-    name: PropTypes.string,
-    onBlur: PropTypes.func,
-    onChange: PropTypes.func,
-    placeholder: PropTypes.string,
-    placeholderChar: PropTypes.string,
-    inputProps: PropTypes.object,
-    inputRef: PropTypes.func,
-    secondChar: PropTypes.string,
-    showMask: PropTypes.bool,
-    spacerChar: PropTypes.string,
-    value: PropTypes.string,
-  }
-
-  static defaultProps = {
-    guide: true,
-    showMask: false,
-    ddPrecision: 6,
-    dmsPrecision: 0,
-    placeholder: '04° 08′ 15″ N 162° 03′ 42″ E',
-    placeholderChar: '_',
-    degreeChar: '°',
-    minuteChar: '′',
-    secondChar: '″',
-    spacerChar: ' ',
-    onBlur: () => {},
-    onChange: () => {},
-  }
-
-  constructor(props) {
-    super(props)
-
-    const { dmsPrecision, value } = props
-
-    this.state = {
-      mask: createMask(getMaskOptions(props)),
-      pipe: createLatLongPipe(dmsPrecision),
-      value,
-    }
-  }
-
-  static getDerivedStateFromProps(props) {
-    const mask = createMask(getMaskOptions(props))
-    const pipe = createLatLongPipe(props.dmsPrecision)
-    const value = convertInput(props.value, props.dmsPrecision)
-
-    return { mask, pipe, value }
-  }
-
-  handleBlur = () => {
-    if (this.inputRef) {
-      const { value } = this.inputRef.inputElement
-      this.handleChange({ target: { value } })
-    }
-
-    this.props.onBlur()
-  }
-
-  handleChange = e => {
-    const { ddPrecision, onChange } = this.props
-    const { value } = e.target
-    const dms = normalizeInput(value)
-    const valid = validateDMS(dms)
-
-    // Callback if there's an empty value
-    if (value.length === 0) {
-      onChange(e, { dd: [], dms: '', dmsArray: [] })
-
-      // Otherwise only callback if the value is a valid DMS
-    } else if (valid) {
-      const dmsArray = parseDMS(dms)
-
-      // @ts-ignore {https://github.com/Microsoft/TypeScript/pull/24897}
-      const lat = dmsToDecimal(...dmsArray[0], ddPrecision)
-      // @ts-ignore
-      const lon = dmsToDecimal(...dmsArray[1], ddPrecision)
-
-      //console.log('handleChange', { value, dmsArray, lat, lon })
-
-      // Callback with the original event and the converted values
-      onChange(e, { dd: [lat, lon], dms, dmsArray })
-    }
-  }
-
-  setRef = ref => {
-    if (ref) {
-      this.inputRef = ref
-
-      if (typeof this.props.inputRef === 'function') {
-        this.props.inputRef(ref)
-      }
-    }
-  }
-
-  render() {
-    const { mask, pipe, value } = this.state
-    const {
-      className,
-      guide,
-      inputProps,
-      name,
-      placeholder,
-      placeholderChar,
-      showMask,
-    } = this.props
-
-    return (
-      <MaskedInput
-        {...inputProps}
-        dir="auto"
-        guide={guide}
-        className={className}
-        key={value}
-        mask={mask}
-        name={name}
-        onBlur={this.handleBlur}
-        onChange={this.handleChange}
-        pipe={pipe}
-        placeholder={placeholder}
-        placeholderChar={placeholderChar}
-        ref={this.setRef}
-        showMask={showMask}
-        type="text"
-        value={value}
-      />
-    )
-  }
 }
+
+CoordinateInput.propTypes = {
+  className: PropTypes.string,
+  degreeChar: PropTypes.string,
+  ddPrecision: PropTypes.number,
+  dmsPrecision: PropTypes.number,
+  minuteChar: PropTypes.string,
+  name: PropTypes.string,
+  onBlur: PropTypes.func,
+  onChange: PropTypes.func.isRequired,
+  placeholder: PropTypes.string,
+  placeholderChar: PropTypes.string,
+  inputProps: PropTypes.object,
+  inputRef: PropTypes.func,
+  secondChar: PropTypes.string,
+  spacerChar: PropTypes.string,
+  value: PropTypes.string,
+}
+
+export default CoordinateInput
