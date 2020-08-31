@@ -1,7 +1,8 @@
 // @ts-check
 import IMask from 'imask/esm/imask'
 import { useCallback, useEffect, useMemo, useRef } from 'react'
-import { createMask } from './createMask'
+import { createDDMask } from './createDDMask'
+import { createDMSMask } from './createDMSMask'
 import {
   convertInput,
   dmsToDecimal,
@@ -13,7 +14,10 @@ import {
 /**
  * useCoordMask Hook
  *
- * @param {Object} options
+ * @param {object} options
+ * @property {object|null} [inputRef] Input ref
+ * @property {number} [controlledValue] Input value
+ * @property {string} [format] Mask format <dms|dd>
  * @property {string} [degreeChar] Degrees symbol, e.g. `°`
  * @property {string} [minuteChar] Minutes symbol, e.g. `′`
  * @property {string} [secondChar] Seconds symbol, e.g. `″`
@@ -21,11 +25,12 @@ import {
  * @property {string} [placeholderChar] Placeholder character, e.g. `_`
  * @property {number} [dmsPrecision] Decimal places [0-6]
  * @property {string} value Input value
- * @returns {Object}
+ * @returns {object}
  */
 export const useCoordMask = ({
   inputRef,
   controlledValue,
+  format,
   degreeChar,
   minuteChar,
   secondChar,
@@ -39,20 +44,24 @@ export const useCoordMask = ({
 
   const mask = useMemo(
     () =>
-      createMask({
-        degreeChar,
-        minuteChar,
-        secondChar,
-        spacerChar,
-        placeholderChar,
-        dmsPrecision,
-      }),
+      format === 'dd'
+        ? createDDMask({ spacerChar, placeholderChar, ddPrecision })
+        : createDMSMask({
+            degreeChar,
+            minuteChar,
+            secondChar,
+            spacerChar,
+            placeholderChar,
+            dmsPrecision,
+          }),
     [
+      format,
       degreeChar,
       minuteChar,
       secondChar,
       spacerChar,
       placeholderChar,
+      ddPrecision,
       dmsPrecision,
     ]
   )
@@ -87,13 +96,13 @@ export const useCoordMask = ({
     (element, mask) => {
       if (maskRef.current) maskRef.current.destroy()
 
-      maskRef.current = new IMask(element, mask)
+      maskRef.current = IMask(element, mask)
 
       //console.log('initMask', maskRef.current)
 
-      maskRef.current.on('accept', () => {
-        //console.log('accept')
-      })
+      //maskRef.current.on('accept', () => {
+      //console.log('accept')
+      //})
 
       maskRef.current.on('complete', () => {
         const { unmaskedValue, value } = maskRef.current

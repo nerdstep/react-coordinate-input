@@ -56,6 +56,8 @@ Component props and their default values.
   onChange: undefined,
   // Input placeholder; this will only be visible if `placeholderChar` is set to `null`
   placeholder: '04° 08′ 15″ N 162° 03′ 42″ E',
+  // Input mask format <dms|dd>
+  format: 'dms',
   // Number of decimal places to round decimal degrees to (0-8)
   ddPrecision: 6,
   // Number of decimal places for Seconds value on input (0-6)

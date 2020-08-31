@@ -24,6 +24,7 @@ const selectOptions = [
 ]
 
 const App = () => {
+  const [format, setFormat] = useState('dms')
   const [ddPrecision, setDDPrecision] = useState(6)
   const [dmsPrecision, setDMSPrecision] = useState(0)
   const [selected, setSelected] = useState('')
@@ -52,6 +53,14 @@ const App = () => {
   const handleBlur = useCallback((e) => {
     console.log('handleBlur', e)
   }, [])
+
+  const handleFormatChange = useCallback(
+    (e) => {
+      handleReset()
+      setFormat(e.target.value)
+    },
+    [handleReset, setFormat]
+  )
 
   const handleChangeDDPrecision = useCallback(
     (e) => {
@@ -104,6 +113,7 @@ const App = () => {
                     className="input"
                     ddPrecision={ddPrecision}
                     dmsPrecision={dmsPrecision}
+                    format={format}
                     inputProps={{ id: 'react-coord-input' }}
                     inputRef={(c) => (inputRef.current = c)}
                     name="coordinate-input"
@@ -137,6 +147,35 @@ const App = () => {
                 </div>
               </div>
               <h5>Options</h5>
+              <div className="field">
+                <label className="label is-small has-text-grey">
+                  Input Format
+                </label>
+                <div className="control">
+                  <label className="radio">
+                    <input
+                      type="radio"
+                      name="format"
+                      value="dms"
+                      checked={format === 'dms'}
+                      onClick={handleFormatChange}
+                      title="Degrees Minutes Seconds"
+                    />
+                    <span> DMS</span>
+                  </label>
+                  <label className="radio">
+                    <input
+                      type="radio"
+                      name="format"
+                      value="dd"
+                      checked={format === 'dd'}
+                      onClick={handleFormatChange}
+                      title="Decimal Degrees"
+                    />
+                    <span> DD</span>
+                  </label>
+                </div>
+              </div>
               <div className="field">
                 <label className="label is-small has-text-grey">
                   Decimal Places for Seconds (0-6)

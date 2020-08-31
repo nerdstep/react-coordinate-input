@@ -9,6 +9,7 @@ import { useCoordMask } from './useCoordMask'
  */
 const CoordinateInput = ({
   className,
+  format,
   degreeChar,
   minuteChar,
   secondChar,
@@ -29,6 +30,7 @@ const CoordinateInput = ({
   useCoordMask({
     inputRef: innerRef,
     controlledValue,
+    format,
     degreeChar,
     minuteChar,
     secondChar,
@@ -72,6 +74,7 @@ CoordinateInput.propTypes = {
   degreeChar: PropTypes.string,
   ddPrecision: PropTypes.number,
   dmsPrecision: PropTypes.number,
+  format: PropTypes.string,
   minuteChar: PropTypes.string,
   name: PropTypes.string,
   onBlur: PropTypes.func,

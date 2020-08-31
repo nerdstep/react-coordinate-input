@@ -70,7 +70,7 @@ const getDirectionMask = (isLon) => ({
 })
 
 /**
- * createMask
+ * createDMSMask
  *
  * Returns an input mask using the provided symbols
  *
@@ -82,7 +82,7 @@ const getDirectionMask = (isLon) => ({
  * @property {string} [placeholderChar] Placeholder character, e.g. `_`
  * @property {number} [dmsPrecision] Second decimal places [0-6]
  */
-export const createMask = ({
+export const createDMSMask = ({
   degreeChar = DEGREE_CHAR,
   minuteChar = MINUTE_CHAR,
   secondChar = SECOND_CHAR,
