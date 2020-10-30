@@ -31,7 +31,7 @@ const App = () => {
   const inputRef = useRef()
 
   const placeholder = useMemo(() => {
-    let p = '04° 08′ 15.dec″ N 162° 03′ 42.dec″ E'
+    const p = '04° 08′ 15.dec″ N 162° 03′ 42.dec″ E'
     let dec = ''
     if (dmsPrecision > 0) {
       dec = fill([], 0, dmsPrecision).join('')
@@ -46,11 +46,12 @@ const App = () => {
   }, [])
 
   const handleChange = useCallback((value, props) => {
+    console.log('handleChange', { value, ...props })
     setState({ value, ...props })
   }, [])
 
   const handleBlur = useCallback((e) => {
-    console.log('handleBlur', e)
+    //console.log('handleBlur', e)
   }, [])
 
   const handleChangeDDPrecision = useCallback(
@@ -101,10 +102,11 @@ const App = () => {
                 <label className="label">Input - Degrees Minutes Seconds</label>
                 <div className="control">
                   <CoordinateInput
+                    aria-label={name}
                     className="input"
+                    dir="auto"
                     ddPrecision={ddPrecision}
                     dmsPrecision={dmsPrecision}
-                    inputProps={{ id: 'react-coord-input' }}
                     inputRef={(c) => (inputRef.current = c)}
                     name="coordinate-input"
                     onBlur={handleBlur}
@@ -114,6 +116,7 @@ const App = () => {
                     value={state.value}
                   />
                 </div>
+                <p className="help">Example: {placeholder}</p>
               </div>
               <div className="field is-grouped">
                 <div className="control">
@@ -124,8 +127,8 @@ const App = () => {
                       value={selected}
                     >
                       <option value="">Set value...</option>
-                      {selectOptions.map((el) => (
-                        <option>{el}</option>
+                      {selectOptions.map((el, i) => (
+                        <option key={i}>{el}</option>
                       ))}
                     </select>
                   </div>
