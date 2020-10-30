@@ -49,9 +49,6 @@ Component props and their default values.
 
 ```javascript
 {
-  className: undefined,
-  name: undefined,
-  onBlur: undefined,
   // See below for more info on the onChange callback
   onChange: undefined,
   // Input placeholder; this will only be visible if `placeholderChar` is set to `null`
@@ -60,8 +57,6 @@ Component props and their default values.
   ddPrecision: 6,
   // Number of decimal places for Seconds value on input (0-6)
   dmsPrecision: 0,
-  // Use this to pass additional props to the underlying input
-  inputProps: undefined,
   // Callback function which receives the input ref
   inputRef: undefined,
   // DMS characters used in the input mask
