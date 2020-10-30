@@ -1,3 +1,23 @@
+<a name="1.0.0-rc.1"></a>
+
+### 1.0.0-rc.1 (2020-10-29)
+
+#### Summary
+
+- This version fixes a little bug and refactors the component props a bit.
+
+#### Changed
+
+- Props such as `className`, `name`, etc. are no longer explicity defined as props on the component. Any props not specifically defined in the docs will be passed on to the input component.
+
+#### Removed
+
+- BREAKING CHANGE: Removed `inputProps` prop. Any props that you want to provide to the input can now simply be passed directly to the `CoordinateInput` component.
+
+#### Fixed
+
+- The `onChange` handler now correctly fires when the input has been cleared.
+
 <a name="1.0.0-beta"></a>
 
 ### 1.0.0-beta (2020-05-15)
