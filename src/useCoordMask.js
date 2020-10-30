@@ -87,12 +87,15 @@ export const useCoordMask = ({
     (element, mask) => {
       if (maskRef.current) maskRef.current.destroy()
 
-      maskRef.current = new IMask(element, mask)
+      maskRef.current = IMask(element, mask)
 
       //console.log('initMask', maskRef.current)
 
       maskRef.current.on('accept', () => {
-        //console.log('accept')
+        const { unmaskedValue, value } = maskRef.current
+        if (unmaskedValue === '') {
+          handleChange(value, unmaskedValue)
+        }
       })
 
       maskRef.current.on('complete', () => {
@@ -110,7 +113,7 @@ export const useCoordMask = ({
 
       //console.log({ controlledValue, dmsValue, maskedValue, mask })
 
-      if (controlledValue !== maskedValue) {
+      if (controlledValue && controlledValue !== maskedValue) {
         inputRef.current.value = maskedValue
         initMask(inputRef.current, mask)
         handleChange(maskedValue, mask.unmaskedValue)
