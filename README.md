@@ -6,7 +6,7 @@
 [![NPM](https://flat.badgen.net/npm/dt/react-coordinate-input)](https://www.npmjs.com/package/react-coordinate-input)
 [![gzip size](https://flat.badgen.net/bundlephobia/minzip/react-coordinate-input)](https://bundlephobia.com/result?p=react-coordinate-input)
 [![code coverage](https://flat.badgen.net/coveralls/c/github/nerdstep/react-coordinate-input)](https://coveralls.io/github/nerdstep/react-coordinate-input)
-[![Build Status](https://flat.badgen.net/travis/nerdstep/react-coordinate-input)](https://travis-ci.org/nerdstep/react-coordinate-input)
+[![status](https://flat.badgen.net/github/status/nerdstep/react-coordinate-input/master/ci)](https://github.com/nerdstep/react-coordinate-input/actions?query=workflow%3Aci)
 [![license](https://flat.badgen.net/github/license/nerdstep/react-coordinate-input)](./LICENSE)
 
 ## Features
