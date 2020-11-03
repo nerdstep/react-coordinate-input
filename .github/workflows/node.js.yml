@@ -17,10 +17,19 @@ jobs:
         uses: bahmutov/npm-install@v1
         with:
           useLockFile: false
+          working-director: |
+            ./
+            ./example
 
       - name: Run tests 🧪
-        run: npm run test:ci 
+        run: npm run test:ci
       
+      - name: Coveralls 📈
+        uses: coverallsapp/github-action@master
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          flag-name: Unit
+
       - name: Lint source code 🧹
         run: npm run lint
         
