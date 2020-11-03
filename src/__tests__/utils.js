@@ -46,6 +46,10 @@ describe('normalizeInput', () => {
 })
 
 describe('convertInput', () => {
+  it('should be empty', () => {
+    expect(convertInput()).toBe('')
+  })
+
   it(`${data[0][0]} -> ${data[0][0]}`, () => {
     expect(convertInput(data[0][0])).toBe(data[0][0])
   })
