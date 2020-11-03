@@ -102,7 +102,7 @@ const App = () => {
                 <label className="label">Input - Degrees Minutes Seconds</label>
                 <div className="control">
                   <CoordinateInput
-                    aria-label={name}
+                    aria-label="coordinate-input"
                     className="input"
                     dir="auto"
                     ddPrecision={ddPrecision}
