@@ -25,6 +25,8 @@ jobs:
 
       - name: Run tests 🧪
         run: npm run test:ci
+        env:
+          CI: true
       
       - name: Coveralls 📈
         uses: coverallsapp/github-action@master
@@ -40,3 +42,18 @@ jobs:
 
       - name: Build `example` 🏗
         run: cd example && yarn build
+        env:
+          SKIP_PREFLIGHT_CHECK: true
+
+      - name: Semantic Release 🚀
+        uses: cycjimmy/semantic-release-action@v2
+        with:
+          dry-run: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+          
+      - name: Release published 🚀
+        if: steps.semantic.outputs.new_release_published == 'true'
+        run: |
+          echo ${{ steps.semantic.outputs.new_release_version }}
