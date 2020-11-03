@@ -13,10 +13,15 @@ jobs:
       - name: Checkout 🛎
         uses: actions/checkout@v2
         
-      - name: Install dependencies 📦
+      - name: Install `lib` dependencies 📦
         uses: bahmutov/npm-install@v1
         with:
           useLockFile: false
+
+      - name: Install `example` dependencies 📦
+        uses: bahmutov/npm-install@v1
+        with:
+          working-directory: example
 
       - name: Run tests 🧪
         run: npm run test:ci
@@ -30,19 +35,8 @@ jobs:
       - name: Lint source code 🧹
         run: npm run lint
         
-      - name: Build 🏗
+      - name: Build `lib` 🏗
         run: npm run build
 
-  build-example:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout 🛎
-        uses: actions/checkout@v2
-        
-      - name: Install dependencies 📦
-        uses: bahmutov/npm-install@v1
-        with:
-          working-directory: example
-
-      - name: Build 🏗
+      - name: Build `example` 🏗
         run: cd example && yarn build
