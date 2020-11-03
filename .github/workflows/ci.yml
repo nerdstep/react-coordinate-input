@@ -17,9 +17,6 @@ jobs:
         uses: bahmutov/npm-install@v1
         with:
           useLockFile: false
-          working-directory: |
-            ./
-            ./example
 
       - name: Run tests 🧪
         run: npm run test:ci
@@ -35,3 +32,17 @@ jobs:
         
       - name: Build 🏗
         run: npm run build
+
+  build-example:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout 🛎
+        uses: actions/checkout@v2
+        
+      - name: Install dependencies 📦
+        uses: bahmutov/npm-install@v1
+        with:
+          working-directory: example
+
+      - name: Build 🏗
+        run: cd example && yarn build
