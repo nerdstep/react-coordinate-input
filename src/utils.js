@@ -25,11 +25,11 @@ export function fill(arr, value, count) {
  * Returns a normalized DMS input value
  *
  * @param {string} value Input value
- * @param {string} sep Value separator
+ * @param {string} [sep] Value separator
  * @returns {string} Normalized value
  */
-export function normalizeInput(value = '', sep = SEPARATOR) {
-  return value.replace(/[^0-9.NSEW]/gi, sep).replace(/:{2,}/g, sep)
+export function normalizeInput(value, sep = SEPARATOR) {
+  return value?.replace(/[^0-9.NSEW]/gi, sep).replace(/:{2,}/g, sep) || ''
 }
 
 /**
@@ -39,9 +39,10 @@ export function normalizeInput(value = '', sep = SEPARATOR) {
  *
  * @param {string} value Input value
  * @param {number} precision DMS decimal places
+ *  @param {string} [sep] Value separator
  * @returns {string} Normalized DMS string
  */
-export function convertInput(value = '', precision, sep = SEPARATOR) {
+export function convertInput(value, precision, sep = SEPARATOR) {
   if (validateDD(value)) {
     const dd = value.split(',')
     const lat = parseFloat(dd[0])
@@ -50,7 +51,7 @@ export function convertInput(value = '', precision, sep = SEPARATOR) {
     const lonArr = decimalToDMS(lon, true, precision)
     value = serializeDMS(latArr, lonArr, sep)
   }
-  return value
+  return value || ''
 }
 
 /**
@@ -81,7 +82,7 @@ export function validateDMS(value) {
  * Parses a DMS string into an array of lat/lon arrays
  *
  * @param {string} value DMS value, e.g. '04:08:15:N:162:03:42:E'
- * @param {string} sep Separator
+ * @param {string} [sep] Separator
  * @returns {((string|number)[])[]} [[D, M, S, 'N|S'], [D, M, S, 'E|W']]
  */
 export function parseDMS(value, sep = SEPARATOR) {
@@ -103,7 +104,7 @@ export function parseDMS(value, sep = SEPARATOR) {
  *
  * @param {(string|number)[]} lat DMS latitude, e.g. [4, 8, 15, 'N']
  * @param {(string|number)[]} lon DMS longitude, e.g. [162, 3, 42, 'E']
- * @param {string} sep Separator
+ * @param {string} [sep] Separator
  * @returns {string}
  * @example `04:08:15:N:162:03:42:E`
  */
