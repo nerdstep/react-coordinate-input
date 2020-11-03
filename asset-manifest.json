@@ -1,22 +1,20 @@
 {
   "files": {
-    "main.js": "/react-coordinate-input/static/js/main.5bdcbfdd.chunk.js",
-    "main.js.map": "/react-coordinate-input/static/js/main.5bdcbfdd.chunk.js.map",
-    "runtime-main.js": "/react-coordinate-input/static/js/runtime-main.3b722917.js",
-    "runtime-main.js.map": "/react-coordinate-input/static/js/runtime-main.3b722917.js.map",
-    "static/css/2.c3343ac3.chunk.css": "/react-coordinate-input/static/css/2.c3343ac3.chunk.css",
-    "static/js/2.6339528f.chunk.js": "/react-coordinate-input/static/js/2.6339528f.chunk.js",
-    "static/js/2.6339528f.chunk.js.map": "/react-coordinate-input/static/js/2.6339528f.chunk.js.map",
+    "main.js": "/react-coordinate-input/static/js/main.7edda354.chunk.js",
+    "main.js.map": "/react-coordinate-input/static/js/main.7edda354.chunk.js.map",
+    "runtime-main.js": "/react-coordinate-input/static/js/runtime-main.77148b2a.js",
+    "runtime-main.js.map": "/react-coordinate-input/static/js/runtime-main.77148b2a.js.map",
+    "static/css/2.5b800a50.chunk.css": "/react-coordinate-input/static/css/2.5b800a50.chunk.css",
+    "static/js/2.79052891.chunk.js": "/react-coordinate-input/static/js/2.79052891.chunk.js",
+    "static/js/2.79052891.chunk.js.map": "/react-coordinate-input/static/js/2.79052891.chunk.js.map",
     "index.html": "/react-coordinate-input/index.html",
-    "precache-manifest.b03927ad026eb3de90d429331d5e7f94.js": "/react-coordinate-input/precache-manifest.b03927ad026eb3de90d429331d5e7f94.js",
-    "service-worker.js": "/react-coordinate-input/service-worker.js",
-    "static/css/2.c3343ac3.chunk.css.map": "/react-coordinate-input/static/css/2.c3343ac3.chunk.css.map",
-    "static/js/2.6339528f.chunk.js.LICENSE.txt": "/react-coordinate-input/static/js/2.6339528f.chunk.js.LICENSE.txt"
+    "static/css/2.5b800a50.chunk.css.map": "/react-coordinate-input/static/css/2.5b800a50.chunk.css.map",
+    "static/js/2.79052891.chunk.js.LICENSE.txt": "/react-coordinate-input/static/js/2.79052891.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
-    "static/js/runtime-main.3b722917.js",
-    "static/css/2.c3343ac3.chunk.css",
-    "static/js/2.6339528f.chunk.js",
-    "static/js/main.5bdcbfdd.chunk.js"
+    "static/js/runtime-main.77148b2a.js",
+    "static/css/2.5b800a50.chunk.css",
+    "static/js/2.79052891.chunk.js",
+    "static/js/main.7edda354.chunk.js"
   ]
 }
