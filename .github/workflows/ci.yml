@@ -45,15 +45,21 @@ jobs:
         env:
           SKIP_PREFLIGHT_CHECK: true
 
-      - name: Semantic Release 🚀
-        uses: cycjimmy/semantic-release-action@v2
+      - name: Deploy to GitHub Pages 🚀
+        uses: peaceiris/actions-gh-pages@v3
         with:
-          dry_run: true
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./example/build
+
+#      - name: Semantic Release 🚀
+#        uses: cycjimmy/semantic-release-action@v2
+#        with:
+#          dry_run: true
+#        env:
+#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
           
-      - name: Release published 🚀
-        if: steps.semantic.outputs.new_release_published == 'true'
-        run: |
-          echo ${{ steps.semantic.outputs.new_release_version }}
+#      - name: Release published 🚀
+#        if: steps.semantic.outputs.new_release_published == 'true'
+#        run: |
+#          echo ${{ steps.semantic.outputs.new_release_version }}
