@@ -42,7 +42,13 @@ const CoordinateInput = ({
   }, [innerRef, inputRef])
 
   return (
-    <input {...props} placeholder={placeholder} ref={innerRef} type="text" />
+    <input
+      {...props}
+      defaultValue={controlledValue}
+      placeholder={placeholder}
+      ref={innerRef}
+      type="text"
+    />
   )
 }
 
