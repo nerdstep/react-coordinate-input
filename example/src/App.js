@@ -21,6 +21,8 @@ const selectOptions = [
   '-90, 180',
   '42.363, 27.891',
   '42 27 00 N 067 06 00 W',
+  '040815N1620342E',
+  '23° 16′ 07″ S 127° 00′ 00″ E',
 ]
 
 const App = () => {
@@ -80,7 +82,7 @@ const App = () => {
   }, [])
 
   useEffect(() => {
-    //console.log(inputRef.current)
+    //console.log(inputRef.current.value)
   }, [])
 
   const output = {
