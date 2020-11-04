@@ -1,5 +1,5 @@
 import '@testing-library/jest-dom'
-import { fireEvent, render } from '@testing-library/react'
+import { render } from '@testing-library/react'
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { isDOMComponent } from 'react-dom/test-utils'
@@ -7,20 +7,27 @@ import CoordinateInput from '../'
 
 const testsValues = [
   {
-    testName: 'should call the onChange handler with empty results',
+    testName: 'should convert decimal degress',
     inputName: 'testInput',
-    value: ' ',
+    initialValue: '__° __′ __″ _ ___° __′ __″ _',
+    changeValue: '90, -90',
+    resultValue: '90° 00′ 00″ N 090° 00′ 00″ W',
     result: {
-      value: '',
-      unmaskedValue: '',
-      dd: [],
-      dms: [],
+      dd: [90, -90],
+      dms: [
+        [90, 0, 0, 'N'],
+        [90, 0, 0, 'W'],
+      ],
+      unmaskedValue: '900000N0900000W',
+      value: '90° 00′ 00″ N 090° 00′ 00″ W',
     },
   },
   {
     testName: 'should have dmsPrecision 3',
     inputName: 'testInput',
-    value: '90 00 00.000 N 180 00 00.000 E',
+    initialValue: '__° __′ __.___″ _ ___° __′ __.___″ _',
+    changeValue: '90 00 00.000 N 180 00 00.000 E',
+    resultValue: '90° 00′ 00.000″ N 180° 00′ 00.000″ E',
     props: {
       dmsPrecision: 3,
     },
@@ -37,7 +44,9 @@ const testsValues = [
   {
     testName: 'should have ddPrecision 8',
     inputName: 'testInput',
-    value: '30 09 08 N 038 09 07 E',
+    initialValue: '__° __′ __″ _ ___° __′ __″ _',
+    changeValue: '30 09 08 N 038 09 07 E',
+    resultValue: '30° 09′ 08″ N 038° 09′ 07″ E',
     props: {
       ddPrecision: 8,
     },
@@ -53,45 +62,52 @@ const testsValues = [
   },
 ]
 
-testsValues.forEach(({ testName, inputName, value, props = {}, result }) => {
-  it(`${testName}`, () => {
-    const event = { target: { value } }
-    const onChange = jest.fn((value, obj) => ({ value, ...obj }))
+testsValues.forEach(
+  ({
+    testName,
+    inputName,
+    initialValue,
+    changeValue,
+    resultValue,
+    props = {},
+    result,
+  }) => {
+    it(`${testName}`, () => {
+      const onChange = jest.fn((value, obj) => ({ value, ...obj }))
 
-    const { /*debug,*/ getByLabelText } = render(
-      <CoordinateInput
-        {...props}
-        aria-label={inputName}
-        name={inputName}
-        onChange={onChange}
-        value={value}
-      />
-    )
+      const { /*debug,*/ getByLabelText, rerender } = render(
+        <CoordinateInput
+          {...props}
+          aria-label={inputName}
+          name={inputName}
+          onChange={onChange}
+          value={initialValue}
+        />
+      )
 
-    //debug(getByLabelText(inputName))
+      const input = getByLabelText(inputName)
+      //debug(input)
 
-    const input = getByLabelText(inputName)
+      expect(input).toBeInTheDocument()
+      expect(input).toHaveAttribute('name', inputName)
+      expect(input).toHaveValue(initialValue)
 
-    fireEvent.change(input, event)
+      rerender(
+        <CoordinateInput
+          {...props}
+          aria-label={inputName}
+          name={inputName}
+          onChange={onChange}
+          value={changeValue}
+        />
+      )
 
-    expect(input).toBeInTheDocument()
-    expect(input).toHaveAttribute('name', inputName)
-    expect(input).toHaveValue(value)
-    expect(onChange).toHaveReturnedWith(result)
-    expect(onChange).toHaveBeenCalledTimes(1)
-  })
-})
-
-describe('inputRef', () => {
-  it('should callback with a ref to the input', () => {
-    const inputRef = jest.fn((ref) => {
-      expect(isDOMComponent(ref)).toBe(true)
+      expect(input).toHaveValue(resultValue)
+      expect(onChange).toHaveReturnedWith(result)
+      expect(onChange).toHaveBeenCalledTimes(1)
     })
-
-    render(<CoordinateInput inputRef={inputRef} onChange={() => {}} />)
-    expect(inputRef).toHaveBeenCalledTimes(1)
-  })
-})
+  }
+)
 
 describe('CoordinateInput', () => {
   it('is truthy', () => {
@@ -103,5 +119,64 @@ describe('CoordinateInput', () => {
       <CoordinateInput onChange={() => {}} />,
       document.createElement('div')
     )
+  })
+
+  it('should callback with a ref to the input', () => {
+    const inputRef = jest.fn((ref) => {
+      expect(isDOMComponent(ref)).toBe(true)
+    })
+
+    render(<CoordinateInput inputRef={inputRef} onChange={() => {}} />)
+    expect(inputRef).toHaveBeenCalledTimes(1)
+  })
+
+  it('should not call the onChange handler', () => {
+    const onChange = jest.fn((value, obj) => ({ value, ...obj }))
+
+    const { /*debug,*/ getByLabelText, rerender } = render(
+      <CoordinateInput aria-label="testInput" onChange={onChange} />
+    )
+
+    const input = getByLabelText('testInput')
+    //debug(input)
+
+    expect(input).toBeInTheDocument()
+
+    rerender(
+      <CoordinateInput aria-label="testInput" onChange={onChange} value=" " />
+    )
+
+    expect(input).toHaveValue('__° __′ __″ _ ___° __′ __″ _')
+    expect(onChange).toHaveBeenCalledTimes(0)
+  })
+
+  it('should call the onChange handler with empty results', () => {
+    const onChange = jest.fn((value, obj) => ({ value, ...obj }))
+
+    const { /*debug,*/ getByLabelText, rerender } = render(
+      <CoordinateInput
+        aria-label="testInput"
+        onChange={onChange}
+        value="90, 90"
+      />
+    )
+
+    const input = getByLabelText('testInput')
+    //debug(input)
+
+    expect(input).toBeInTheDocument()
+
+    rerender(
+      <CoordinateInput aria-label="testInput" onChange={onChange} value="" />
+    )
+
+    expect(input).toHaveValue('__° __′ __″ _ ___° __′ __″ _')
+    expect(onChange).toHaveReturnedWith({
+      value: '',
+      unmaskedValue: '',
+      dd: [],
+      dms: [],
+    })
+    expect(onChange).toHaveBeenCalledTimes(2)
   })
 })
