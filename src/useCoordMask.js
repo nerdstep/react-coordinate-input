@@ -14,14 +14,16 @@ import {
  * useCoordMask Hook
  *
  * @param {Object} options
+ * @property {ref} inputRef Input ref
+ * @property {string} controlledValue Input value
  * @property {string} [degreeChar] Degrees symbol, e.g. `°`
  * @property {string} [minuteChar] Minutes symbol, e.g. `′`
  * @property {string} [secondChar] Seconds symbol, e.g. `″`
  * @property {string} [spacerChar] Spacer character, e.g. ` `
  * @property {string} [placeholderChar] Placeholder character, e.g. `_`
+ * @property {number} [ddPrecision] Decimal places [0-8]
  * @property {number} [dmsPrecision] Decimal places [0-6]
- * @property {string} value Input value
- * @returns {Object}
+ * @property {function} onChange onChange callback
  */
 export const useCoordMask = ({
   inputRef,
@@ -85,45 +87,55 @@ export const useCoordMask = ({
 
   const initMask = useCallback(
     (element, mask) => {
-      if (maskRef.current) maskRef.current.destroy()
-
       maskRef.current = IMask(element, mask)
 
-      //console.log('initMask', maskRef.current)
+      //console.log('initMask', { mask })
 
       maskRef.current.on('accept', () => {
-        const { unmaskedValue, value } = maskRef.current
+        const { unmaskedValue } = maskRef.current
+        //console.log('accept', unmaskedValue)
         if (unmaskedValue === '') {
-          handleChange(value, unmaskedValue)
+          maskRef.current._fireEvent('complete')
         }
       })
 
       maskRef.current.on('complete', () => {
         const { unmaskedValue, value } = maskRef.current
+        //console.log('complete', value, unmaskedValue)
         handleChange(value, unmaskedValue)
       })
     },
     [handleChange]
   )
 
-  useEffect(() => {
-    if (inputRef.current && inputRef.current.value !== controlledValue) {
-      const dmsValue = convertInput(controlledValue, dmsPrecision, '')
-      const maskedValue = mask.resolve(dmsValue)
+  const setValue = useCallback(
+    (value) => {
+      // Convert DD value to DMS
+      const dmsValue = convertInput(value, dmsPrecision, '')
 
-      //console.log({ controlledValue, dmsValue, maskedValue, mask })
+      // Resolve new masked value
+      mask.resolve(dmsValue)
 
-      if (controlledValue && controlledValue !== maskedValue) {
-        inputRef.current.value = maskedValue
-        initMask(inputRef.current, mask)
-        handleChange(maskedValue, mask.unmaskedValue)
-      }
-    }
-  }, [controlledValue, dmsPrecision, handleChange, initMask, inputRef, mask])
+      //console.log({ value, dmsValue })
 
+      // Syncronize view from model value & fire change events
+      maskRef.current.updateControl()
+    },
+    [dmsPrecision, mask]
+  )
+
+  // Initialize new IMask instance if it doesn't exist yet
   useEffect(() => {
     if (!maskRef.current) {
       initMask(inputRef.current, mask)
     }
-  }, [controlledValue, initMask, inputRef, mask])
+  }, [initMask, inputRef, mask])
+
+  // Update mask value when the input value changes
+  useEffect(() => {
+    //console.log('useEffect', { controlledValue })
+    if (maskRef.current && inputRef.current?.value !== controlledValue) {
+      setValue(controlledValue)
+    }
+  }, [controlledValue, inputRef, setValue])
 }
