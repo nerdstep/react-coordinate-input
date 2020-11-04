@@ -1,3 +1,15 @@
+<a name="1.0.0-rc.2"></a>
+
+### 1.0.0-rc.2 (2020-11-04)
+
+#### Summary
+
+- This version refactors the internals to fix a bug where the input was not cleared after the component re-renders with an empty value.
+
+#### Fixed
+
+- The input is now cleared when an empty value is received.
+
 <a name="1.0.0-rc.1"></a>
 
 ### 1.0.0-rc.1 (2020-10-29)
