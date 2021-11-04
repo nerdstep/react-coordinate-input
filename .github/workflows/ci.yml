@@ -40,16 +40,16 @@ jobs:
       - name: Build `lib` 🏗
         run: npm run build
 
-      - name: Build `example` 🏗
-        run: cd example && yarn build
-        env:
-          SKIP_PREFLIGHT_CHECK: true
+#      - name: Build `example` 🏗
+#        run: cd example && yarn build
+#        env:
+#          SKIP_PREFLIGHT_CHECK: true
 
-      - name: Deploy to GitHub Pages 🚀
-        uses: peaceiris/actions-gh-pages@v3
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./example/build
+#      - name: Deploy to GitHub Pages 🚀
+#        uses: peaceiris/actions-gh-pages@v3
+#        with:
+#          github_token: ${{ secrets.GITHUB_TOKEN }}
+#          publish_dir: ./example/build
 
 #      - name: Semantic Release 🚀
 #        uses: cycjimmy/semantic-release-action@v2
