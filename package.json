@@ -78,12 +78,16 @@
     "singleQuote": true
   },
   "jest": {
+    "testEnvironment": "jsdom",
     "moduleDirectories": [
       "node_modules",
       "src"
     ],
     "transformIgnorePatterns": [
       "/node_modules/(?!imask)"
+    ],
+    "coveragePathIgnorePatterns": [
+      "src/index.js"
     ]
   }
 }
