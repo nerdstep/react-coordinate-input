@@ -1,3 +1,11 @@
+<a name="1.0.0"></a>
+
+### 1.0.0 (2021-11-04)
+
+#### Summary
+
+- Moved `prop-types` from dependencies to `optionalDependencies`
+
 <a name="1.0.0-rc.2"></a>
 
 ### 1.0.0-rc.2 (2020-11-04)
